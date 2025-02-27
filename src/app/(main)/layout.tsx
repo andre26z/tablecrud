@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { Layout, ConfigProvider, Spin, Card, Grid } from 'antd';
-import { StarFilled } from '@ant-design/icons';
+import { StarFilled, HomeOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { FavoritesProvider, useFavorites } from '@/src/app/context/FavoritesContext';
 import '@ant-design/v5-patch-for-react-19';
@@ -25,7 +25,7 @@ const ProjectSidebar = () => {
       collapsedWidth="0"
       style={{
         backgroundColor: '#1E1E1E',
-        padding: '68px 0.5px 0.5px 0.5px',
+        padding: '0 0.5px 0.5px 0.5px', // Removed top padding to fit title
         borderRight: '1px solid #303030',
         boxShadow: '2px 0 4px rgba(0,0,0,0.2)',
         position: 'fixed',
@@ -35,6 +35,20 @@ const ProjectSidebar = () => {
         overflow: 'auto'
       }}
     >
+      {/* Title linked to home page */}
+      <Link href="/">
+        <div 
+          className="flex items-center justify-center p-4 bg-[0, 0, 0, 0.88] transition-colors duration-200 hover:bg-[#333333]" 
+          style={{ 
+            marginBottom: '10px', 
+            cursor: 'pointer'
+          }}
+        >
+          <HomeOutlined className="text-white mr-2" />
+          <h1 className="text-xl font-semibold text-white m-0">My Projects</h1>
+        </div>
+      </Link>
+      
       <FavoritesList />
     </Sider>
   );
@@ -49,9 +63,22 @@ const ResponsiveFavoritesCard = () => {
 
   return (
     <div className="w-full mx-auto mt-4">
-    
+      <div className="bg-[#282828] rounded-lg overflow-hidden shadow-md border border-[#303030]">
+        {/* Title linked to home page for mobile view */}
+        <Link href="/">
+          <div 
+            className="flex items-center justify-center p-3 bg-[#333] border-b border-[#444] transition-colors duration-200 hover:bg-[#444]" 
+            style={{ 
+              cursor: 'pointer'
+            }}
+          >
+            <HomeOutlined className="text-white mr-2" />
+            <h2 className="text-lg font-medium text-white m-0">My Projects</h2>
+          </div>
+        </Link>
+        
         <FavoritesList />
-      
+      </div>
     </div>
   );
 };
@@ -100,4 +127,4 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </FavoritesProvider>
     </ConfigProvider>
   );
-}
+};

@@ -31,22 +31,13 @@ export default function HomePage() {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'end',
           alignItems: 'center',
           marginBottom: 16
           
         }}
       >
-        <Title  
-          level={4} 
-          style={{ 
-            margin: 0, 
-            color: '#fff' 
-          }}
-          className="text-base md:text-xl"
-        >
-          Projects
-        </Title>
+       
         <div>
           <Button 
             type="primary"
