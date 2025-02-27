@@ -2,7 +2,18 @@
 
 A modern project management dashboard built with Next.js, TypeScript, and Ant Design. This application features a dark theme, project favorites system, and a responsive UI.
 
-![Project Dashboard Screenshot](https://via.placeholder.com/1200x600/1f1f1f/FFFFFF?text=Project+Management+Dashboard)
+## Running Project Example
+
+
+https://github.com/user-attachments/assets/ec713ac9-9c57-4cbd-882b-5d86d7618669
+
+
+## Responsivity Test
+
+
+
+https://github.com/user-attachments/assets/e35de21c-2723-4b6a-b15c-16ec6e3c500e
+
 
 ## Features
 
