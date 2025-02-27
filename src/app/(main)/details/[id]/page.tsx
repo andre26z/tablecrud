@@ -97,7 +97,7 @@ export default function ProjectDetailsPage() {
       }}>
         <div style={{ textAlign: 'center' }}>
           <Spin size="large" />
-          <div style={{ marginTop: '12px' }}>Loading project details...</div>
+          <div style={{ marginTop: '12px', color: '#FFFFFF' }}>Loading project details...</div>
         </div>
       </div>
     );
