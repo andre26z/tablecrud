@@ -167,8 +167,8 @@ export default function EditProjectPage() {
                 colorTextLabel: 'white',
               },
               DatePicker: {
-                colorTextPlaceholder: 'rgba(255, 255, 255, 0.5)',
-                colorBgElevated: 'var(--card-background)',
+                colorTextPlaceholder: 'rgb(255, 255, 255)',
+                colorBgElevated: 'rgb(67, 66, 66)',
                 colorBgContainer: 'var(--card-background)',
               },
               Input: {

@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Space, Table, message, Card, Typography, List, Button, Grid } from 'antd';
 import type { TableProps } from 'antd';
 import Link from 'next/link';
-import { StarOutlined, StarFilled, EditOutlined } from '@ant-design/icons';
+import { StarOutlined, StarFilled, EditOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useFavorites } from '@/app/context/FavoritesContext';
+import { useRouter } from 'next/navigation';
 
 const { Title, Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -26,6 +27,7 @@ interface DataTableProps {
 }
 
 const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
+  const router = useRouter();
   // Create a message instance
   const [messageApi, contextHolder] = message.useMessage();
   
@@ -94,17 +96,44 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     }
   };
 
+  // Handler to navigate to project details
+  const goToProjectDetails = (projectKey: string) => {
+    router.push(`/details/${projectKey}`);
+  };
+
+  // Handler for edit button click - prevents event propagation
+  const handleEditClick = (e: React.MouseEvent, projectKey: string) => {
+    e.stopPropagation();
+    router.push(`/edit/${projectKey}`);
+  };
+
   const columns: TableProps<ProjectType>['columns'] = [
     {
       title: 'Project ID',
       dataIndex: 'projectId',
       key: 'projectId',
       responsive: ['md'],
+      render: (text, record) => (
+        <a 
+          onClick={() => goToProjectDetails(record.key)}
+          className="text-blue-400 hover:text-blue-600 hover:underline cursor-pointer"
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: 'Project Name',
       dataIndex: 'projectName',
       key: 'projectName',
+      render: (text, record) => (
+        <a 
+          onClick={() => goToProjectDetails(record.key)}
+          className="text-blue-400 hover:text-blue-600 hover:underline cursor-pointer"
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: 'Start Date',
@@ -149,22 +178,17 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link href={`/edit/${record.key}`} className="text-blue-500 hover:text-blue-700">
+          <a 
+            onClick={(e) => handleEditClick(e, record.key)} 
+            className="text-blue-500 hover:text-blue-700"
+          >
             <EditOutlined className="mr-1" />
             Edit
-          </Link>
+          </a>
         </Space>
       ),
     },
   ];
-
-  // Use Ant Design's responsive breakpoints
-  // xs: < 576px (mobile phones)
-  // sm: ≥ 576px (mobile phones)
-  // md: ≥ 768px (tablets)
-  // lg: ≥ 992px (desktops)
-  // xl: ≥ 1200px (large desktops)
-  // xxl: ≥ 1600px (extra large desktops)
 
   return (
     <>
@@ -183,6 +207,8 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
                 <Card
                   className="w-full"
                   style={{ background: '#1E1E1E', border: '1px solid #404040' }}
+                  hoverable
+                  onClick={() => goToProjectDetails(project.key)}
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
@@ -221,15 +247,19 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
                     </div>
                   </div>
                   
-                  <Link href={`/edit/${project.key}`}>
+                  <div className="flex space-x-2">
                     <Button 
                       type="primary" 
                       icon={<EditOutlined />}
                       className="w-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/edit/${project.key}`);
+                      }}
                     >
-                      Edit Project
+                      Edit
                     </Button>
-                  </Link>
+                  </div>
                 </Card>
               </List.Item>
             )}
@@ -248,6 +278,10 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
               showSizeChanger: false,
             }}
             scroll={{ x: 'max-content' }}
+            onRow={(record) => ({
+              onClick: () => goToProjectDetails(record.key),
+              style: { cursor: 'pointer' }
+            })}
           />
         )}
       </div>
