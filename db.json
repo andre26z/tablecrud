@@ -58,7 +58,7 @@
       "endDate": "2025-02-04",
       "projectManager": "James Charles",
       "key": "6",
-      "favorite": false
+      "favorite": true
     },
     {
       "projectId": "123",
@@ -67,7 +67,8 @@
       "startDate": "2025-02-06",
       "endDate": "2025-02-18",
       "projectManager": "ssss",
-      "key": "7"
+      "key": "7",
+      "favorite": true
     },
     {
       "projectId": "22222",
@@ -86,6 +87,206 @@
       "endDate": "2025-02-24",
       "projectManager": "wwwww",
       "key": "9"
+    },
+    {
+      "key": "10",
+      "projectId": "PRJ-006",
+      "projectName": "E-commerce Revamp",
+      "description": "Redesigning and optimizing online store for better performance",
+      "startDate": "2025-05-01",
+      "endDate": "2025-10-01",
+      "projectManager": "Jessica Lee",
+      "favorite": false
+    },
+    {
+      "key": "11",
+      "projectId": "PRJ-007",
+      "projectName": "Cybersecurity Upgrade",
+      "description": "Enhancing network security with latest encryption standards",
+      "startDate": "2025-03-20",
+      "endDate": "2025-08-30",
+      "projectManager": "Brian Adams",
+      "favorite": false
+    },
+    {
+      "key": "12",
+      "projectId": "PRJ-008",
+      "projectName": "HR System Automation",
+      "description": "Developing an automated HR system for employee management",
+      "startDate": "2025-06-01",
+      "endDate": "2025-11-15",
+      "projectManager": "Samantha Green",
+      "favorite": false
+    },
+    {
+      "key": "13",
+      "projectId": "PRJ-009",
+      "projectName": "Cloud Infrastructure",
+      "description": "Setting up cloud infrastructure for company-wide adoption",
+      "startDate": "2025-04-10",
+      "endDate": "2025-09-30",
+      "projectManager": "Nathan Carter",
+      "favorite": false
+    },
+    {
+      "key": "14",
+      "projectId": "PRJ-010",
+      "projectName": "Smart Analytics",
+      "description": "Developing AI-powered analytics tools for business intelligence",
+      "startDate": "2025-07-01",
+      "endDate": "2025-12-15",
+      "projectManager": "Olivia Martinez",
+      "favorite": false
+    },
+    {
+      "key": "15",
+      "projectId": "PRJ-011",
+      "projectName": "Automated Testing",
+      "description": "Implementing automated testing frameworks for software QA",
+      "startDate": "2025-05-15",
+      "endDate": "2025-10-10",
+      "projectManager": "Carlos Mendoza",
+      "favorite": false
+    },
+    {
+      "key": "16",
+      "projectId": "PRJ-012",
+      "projectName": "Customer Portal",
+      "description": "Building a self-service customer portal for support requests",
+      "startDate": "2025-06-20",
+      "endDate": "2025-12-01",
+      "projectManager": "Sophia Reynolds",
+      "favorite": false
+    },
+    {
+      "key": "17",
+      "projectId": "PRJ-013",
+      "projectName": "Logistics Optimization",
+      "description": "Developing AI-powered solutions for supply chain optimization",
+      "startDate": "2025-04-05",
+      "endDate": "2025-09-15",
+      "projectManager": "Ethan Parker",
+      "favorite": false
+    },
+    {
+      "key": "18",
+      "projectId": "PRJ-014",
+      "projectName": "Blockchain Integration",
+      "description": "Integrating blockchain technology for secure transactions",
+      "startDate": "2025-08-01",
+      "endDate": "2026-01-15",
+      "projectManager": "Laura Collins",
+      "favorite": false
+    },
+    {
+      "key": "19",
+      "projectId": "PRJ-015",
+      "projectName": "Social Media Automation",
+      "description": "Creating automated tools for social media management",
+      "startDate": "2025-05-25",
+      "endDate": "2025-11-05",
+      "projectManager": "Kevin Foster",
+      "favorite": false
+    },
+    {
+      "key": "20",
+      "projectId": "PRJ-016",
+      "projectName": "IoT Implementation",
+      "description": "Developing IoT-based solutions for smart office management",
+      "startDate": "2025-07-10",
+      "endDate": "2025-12-20",
+      "projectManager": "Megan Lewis",
+      "favorite": false
+    },
+    {
+      "key": "21",
+      "projectId": "PRJ-017",
+      "projectName": "Predictive Analytics",
+      "description": "Leveraging AI to predict customer trends and behaviors",
+      "startDate": "2025-06-05",
+      "endDate": "2025-11-30",
+      "projectManager": "Thomas Anderson",
+      "favorite": false
+    },
+    {
+      "key": "22",
+      "projectId": "PRJ-018",
+      "projectName": "Virtual Reality Training",
+      "description": "Developing VR-based training programs for employees",
+      "startDate": "2025-09-01",
+      "endDate": "2026-02-10",
+      "projectManager": "Rebecca Hall",
+      "favorite": false
+    },
+    {
+      "key": "23",
+      "projectId": "PRJ-019",
+      "projectName": "Automated Accounting",
+      "description": "Integrating automation in financial processes and reporting",
+      "startDate": "2025-04-15",
+      "endDate": "2025-10-25",
+      "projectManager": "Mark Evans",
+      "favorite": false
+    },
+    {
+      "key": "24",
+      "projectId": "PRJ-020",
+      "projectName": "SaaS Platform Development",
+      "description": "Building a cloud-based SaaS product for enterprise use",
+      "startDate": "2025-07-15",
+      "endDate": "2026-01-30",
+      "projectManager": "Rachel Scott",
+      "favorite": false
+    },
+    {
+      "key": "25",
+      "projectId": "PRJ-021",
+      "projectName": "Inventory Management System",
+      "description": "Enhancing inventory tracking and warehouse operations",
+      "startDate": "2025-06-25",
+      "endDate": "2025-12-05",
+      "projectManager": "Zachary White",
+      "favorite": false
+    },
+    {
+      "key": "26",
+      "projectId": "PRJ-022",
+      "projectName": "Voice Recognition AI",
+      "description": "Developing voice recognition technology for customer service",
+      "startDate": "2025-08-10",
+      "endDate": "2026-02-20",
+      "projectManager": "Julia Adams",
+      "favorite": false
+    },
+    {
+      "key": "27",
+      "projectId": "PRJ-023",
+      "projectName": "Automated Marketing Campaigns",
+      "description": "Implementing AI-driven marketing automation",
+      "startDate": "2025-05-30",
+      "endDate": "2025-11-10",
+      "projectManager": "Chris Baker",
+      "favorite": false
+    },
+    {
+      "key": "28",
+      "projectId": "PRJ-024",
+      "projectName": "AR Shopping Experience",
+      "description": "Developing augmented reality solutions for online shopping",
+      "startDate": "2025-09-05",
+      "endDate": "2026-03-01",
+      "projectManager": "Vanessa Cooper",
+      "favorite": false
+    },
+    {
+      "key": "29",
+      "projectId": "PRJ-025",
+      "projectName": "AI-Powered Chatbot",
+      "description": "Building an AI chatbot for customer support automation",
+      "startDate": "2025-07-20",
+      "endDate": "2026-01-05",
+      "projectManager": "Daniel Harris",
+      "favorite": false
     }
   ]
 }
