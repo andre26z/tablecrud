@@ -1,2 +1,17 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Next.js build output
 .next/
+.next
+*.next
+**/*.next
+**/.next/**
+out/
+build/
+
+# Next.js specific files
+**/*-manifest.json
+**/middleware-build-manifest.js
+**/server-reference-manifest.js
+**/server-reference-manifest.json
