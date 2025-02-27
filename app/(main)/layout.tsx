@@ -138,6 +138,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   const screens = useBreakpoint();
+  const { loading } = useFavorites();
   
   // Apply dark mode to HTML element for a consistent dark theme
   useEffect(() => {
@@ -153,6 +154,25 @@ export default function AppLayout({
       document.body.style.padding = '';
     };
   }, []);
+
+  // Full-page loading spinner for initial app loading
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        width: '100%',
+        background: '#121212'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <Spin size="large" />
+          <div style={{ marginTop: '12px', color: '#FFFFFF' }}>Loading application...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ConfigProvider theme={darkTheme}>

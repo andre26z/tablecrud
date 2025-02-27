@@ -88,10 +88,16 @@ export default function ProjectDetailsPage() {
   // Loading state
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="text-center">
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        width: '100%' 
+      }}>
+        <div style={{ textAlign: 'center' }}>
           <Spin size="large" />
-          <div className="mt-3">Loading project details...</div>
+          <div style={{ marginTop: '12px' }}>Loading project details...</div>
         </div>
       </div>
     );

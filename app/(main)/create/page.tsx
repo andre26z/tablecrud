@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Button, 
@@ -10,7 +10,8 @@ import {
   DatePicker, 
   Space, 
   message,
-  ConfigProvider
+  ConfigProvider,
+  Spin
 } from 'antd';
 import { ArrowLeftOutlined, SaveOutlined } from '@ant-design/icons';
 
@@ -19,10 +20,41 @@ const { TextArea } = Input;
 export default function CreateProjectPage() {
   const router = useRouter();
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   
   // Create message instance for antd v5 compatibility
   const [messageApi, contextHolder] = message.useMessage();
+
+  // Handle form initialization and simulate loading
+  useEffect(() => {
+    // Initialize form with empty values to prevent the warning
+    form.resetFields();
+    
+    // Simulate initial loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [form]);
+
+  // Handle success/error messages
+  useEffect(() => {
+    if (submitError) {
+      messageApi.error(submitError);
+      setSubmitError(null);
+    }
+  }, [submitError, messageApi]);
+
+  useEffect(() => {
+    if (submitSuccess) {
+      messageApi.success(submitSuccess);
+      setSubmitSuccess(null);
+    }
+  }, [submitSuccess, messageApi]);
 
   // Handle form submission
   const onFinish = async (values: any) => {
@@ -48,11 +80,11 @@ export default function CreateProjectPage() {
         throw new Error(`Failed to create project: ${response.status}`);
       }
 
-      messageApi.success('Project created successfully');
+      setSubmitSuccess('Project created successfully');
       router.push('/');
     } catch (error) {
       console.error('Error creating project:', error);
-      messageApi.error('Failed to create project');
+      setSubmitError('Failed to create project');
     } finally {
       setSubmitting(false);
     }
@@ -76,7 +108,8 @@ export default function CreateProjectPage() {
     color: 'white',
   };
 
-  return (
+  // Render form component (will be conditionally displayed)
+  const formComponent = (
     <div style={containerStyle}>
       <div style={wrapperStyle}>
         {contextHolder}
@@ -186,7 +219,6 @@ export default function CreateProjectPage() {
                     type="primary" 
                     htmlType="submit" 
                     icon={<SaveOutlined />}
-                    loading={submitting}
                   >
                     Create Project
                   </Button>
@@ -201,4 +233,50 @@ export default function CreateProjectPage() {
       </div>
     </div>
   );
+
+  // Full-page loading spinner
+  const loadingSpinner = (message: string) => (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh',
+      width: '100%',
+      background: '#121212'
+    }}>
+      <div style={{ textAlign: 'center' }}>
+        <Spin size="large" />
+        <div style={{ marginTop: '12px', color: '#FFFFFF' }}>{message}</div>
+      </div>
+    </div>
+  );
+
+  // Conditional rendering with form always being somewhere in the component tree
+  if (loading) {
+    return (
+      <>
+        {loadingSpinner('Loading form...')}
+        <div style={{ display: 'none' }}>
+          <Form form={form}>
+            <Form.Item name="hidden"><Input /></Form.Item>
+          </Form>
+        </div>
+      </>
+    );
+  }
+
+  if (submitting) {
+    return (
+      <>
+        {loadingSpinner('Creating project...')}
+        <div style={{ display: 'none' }}>
+          <Form form={form}>
+            <Form.Item name="hidden"><Input /></Form.Item>
+          </Form>
+        </div>
+      </>
+    );
+  }
+
+  return formComponent;
 }

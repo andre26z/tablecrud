@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Space, Table, message, Card, Typography, List, Button, Grid } from 'antd';
+import { Space, Table, message, Card, Typography, List, Button, Grid, Spin } from 'antd';
 import type { TableProps } from 'antd';
 import Link from 'next/link';
-import { StarOutlined, StarFilled, EditOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { StarOutlined, StarFilled, EditOutlined, InfoCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useFavorites } from '@/app/context/FavoritesContext';
 import { useRouter } from 'next/navigation';
 
@@ -190,6 +190,24 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     },
   ];
 
+  // Full-page loading spinner
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        width: '100%' 
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <Spin size="large" />
+          <div style={{ marginTop: '12px' }}>Loading projects...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {contextHolder}
@@ -197,7 +215,6 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
         {/* For smaller screens (xs and sm), show card list */}
         {(!screens.md) && (
           <List
-            loading={loading}
             dataSource={data}
             renderItem={(project) => (
               <List.Item
@@ -268,21 +285,27 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
 
         {/* For medium screens and up, show the table */}
         {screens.md && (
-          <Table<ProjectType> 
-            columns={columns} 
-            dataSource={data} 
-            loading={loading}
-            rowKey="key"
-            pagination={{
-              pageSize: 10,
-              showSizeChanger: false,
-            }}
-            scroll={{ x: 'max-content' }}
-            onRow={(record) => ({
-              onClick: () => goToProjectDetails(record.key),
-              style: { cursor: 'pointer' }
-            })}
-          />
+          <div className="relative">
+            <Table<ProjectType> 
+              columns={columns} 
+              dataSource={data} 
+              rowKey="key"
+              pagination={{
+                pageSize: 10,
+                showSizeChanger: false,
+                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+                onChange: () => {
+                  // Scroll to top when page changes
+                  window.scrollTo(0, 0);
+                }
+              }}
+              scroll={{ x: 'max-content' }}
+              onRow={(record) => ({
+                onClick: () => goToProjectDetails(record.key),
+                style: { cursor: 'pointer' }
+              })}
+            />
+          </div>
         )}
       </div>
     </>
