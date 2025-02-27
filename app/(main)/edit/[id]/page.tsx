@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { 
   Button, 
   Card, 
@@ -30,17 +30,18 @@ const { TextArea } = Input;
 
 export default function EditProjectPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const projectId = searchParams.get('id');
+  const params = useParams();
+  const projectId = params.id as string;
   
-  // Move the form initialization inside the component body where Form is actually rendered
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [project, setProject] = useState<ProjectType | null>(null);
   
   // Create message instance for antd v5 compatibility
   const [messageApi, contextHolder] = message.useMessage();
+  
+  // Only create the form instance when we're about to use it
+  const [form] = Form.useForm();
 
   // Fetch project data
   useEffect(() => {
@@ -62,7 +63,7 @@ export default function EditProjectPage() {
         const data = await response.json();
         setProject(data);
         
-        // Set form values
+        // Set form values only after we have the data and when form exists
         form.setFieldsValue({
           projectId: data.projectId,
           projectName: data.projectName,
@@ -121,6 +122,7 @@ export default function EditProjectPage() {
     router.push('/');
   };
 
+  // Loading state
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -147,20 +149,12 @@ export default function EditProjectPage() {
           </Button>
         }
       >
-        {/* Ensure the Form has the form prop connected to the Form.useForm instance */}
         <Form
           form={form}
           layout="vertical"
           onFinish={onFinish}
           className="p-4"
-          initialValues={{
-            projectId: project?.projectId || '',
-            projectName: project?.projectName || '',
-            description: project?.description || '',
-            startDate: project?.startDate ? dayjs(project.startDate) : null,
-            endDate: project?.endDate ? dayjs(project.endDate) : null,
-            projectManager: project?.projectManager || ''
-          }}
+          // We don't need initialValues here since we're using form.setFieldsValue in the useEffect
         >
           <Form.Item
             name="projectId"

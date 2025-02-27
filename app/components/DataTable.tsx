@@ -139,7 +139,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link href={`/edit?id=${record.key}`} className="text-blue-500 hover:text-blue-700">
+          <Link href={`/edit/${record.key}`} className="text-blue-500 hover:text-blue-700">
             Edit
           </Link>
         </Space>
@@ -149,18 +149,19 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
 
   return (
     <>
-      {/* Include the message context holder */}
       {contextHolder}
-      <Table<ProjectType> 
-        columns={columns} 
-        dataSource={data} 
-        loading={loading}
-        rowKey="key"
-        pagination={{
-          pageSize: 10,
-          showSizeChanger: false,
-        }}
-      />
+      <div className="p-4 md:p-6">
+        <Table<ProjectType> 
+          columns={columns} 
+          dataSource={data} 
+          loading={loading}
+          rowKey="key"
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: false,
+          }}
+        />
+      </div>
     </>
   );
 };

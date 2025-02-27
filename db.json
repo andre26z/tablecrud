@@ -8,17 +8,17 @@
       "startDate": "2025-01-15",
       "endDate": "2025-04-30",
       "projectManager": "John Smith",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "2",
       "projectId": "PRJ-002",
-      "projectName": "Mobile App Development",
+      "projectName": "teste 2222",
       "description": "Building cross-platform mobile application for iOS and Android",
       "startDate": "2025-02-01",
       "endDate": "2025-06-15",
       "projectManager": "Sarah Johnson",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "3",
@@ -28,7 +28,7 @@
       "startDate": "2025-03-10",
       "endDate": "2025-05-20",
       "projectManager": "Michael Chen",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "4",
@@ -38,7 +38,7 @@
       "startDate": "2025-02-15",
       "endDate": "2025-07-30",
       "projectManager": "Emily Rodriguez",
-      "favorite": true
+      "favorite": false
     },
     {
       "key": "5",
@@ -48,7 +48,7 @@
       "startDate": "2025-04-01",
       "endDate": "2025-09-15",
       "projectManager": "David Wilson",
-      "favorite": true
+      "favorite": false
     },
     {
       "projectId": "666",
@@ -58,7 +58,7 @@
       "endDate": "2025-02-04",
       "projectManager": "James Charles",
       "key": "6",
-      "favorite": true
+      "favorite": false
     }
   ]
 }

@@ -1,62 +1,36 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button, Card, Space, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { ReloadOutlined } from '@ant-design/icons';
 import DataTable from '@/app/components/DataTable';
 import { useDataService } from '@/app/services/dataServices';
-import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
-  const router = useRouter();
   const { data, loading, error, refreshData } = useDataService();
-  const [projects, setProjects] = useState([]);
   
-  // Create message instance for antd v5 compatibility
-  const [messageApi, contextHolder] = message.useMessage();
-  
-  // Process data when it arrives
-  useEffect(() => {
-    if (data && Array.isArray(data.projects)) {
-      setProjects(data.projects);
-    } else if (data && Array.isArray(data)) {
-      // Handle case where data might be direct array
-      setProjects(data);
-    } else {
-      console.warn('Data format unexpected:', data);
-      setProjects([]);
-    }
-  }, [data]);
-
   // Show error message if fetch fails
-  useEffect(() => {
+  React.useEffect(() => {
     if (error) {
-      messageApi.error(`Failed to load data: ${error.message}`);
+      message.error(`Failed to load data: ${error.message}`);
     }
   }, [error]);
 
-  const handleCreateProject = () => {
-    router.push('/create');
-  };
-
   return (
-    <div className="max-w-6xl mx-auto">
-      {contextHolder}
-      <Card 
-        title="Project Management" 
-        className="shadow-sm"
-        styles={{ body: { padding: '0' } }}
-        extra={
-          <Button 
-            type="primary"
-            icon={<PlusOutlined />} 
-            onClick={handleCreateProject}
-          >
-            Create Project
-          </Button>
-        }
-      >
-        <DataTable data={projects} loading={loading} />
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-semibold">Project Management</h1>
+        <Button 
+          icon={<ReloadOutlined />} 
+          onClick={refreshData}
+          loading={loading}
+        >
+          Refresh
+        </Button>
+      </div>
+      
+      <Card>
+        <DataTable data={data || []} loading={loading} />
       </Card>
     </div>
   );
