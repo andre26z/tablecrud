@@ -40,11 +40,12 @@ export default function EditProjectPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [project, setProject] = useState<ProjectType | null>(null);
+  const [formInitialized, setFormInitialized] = useState(false);
   
   // Create message instance for antd v5 compatibility
   const [messageApi, contextHolder] = message.useMessage();
   
-  // Only create the form instance when we're about to use it
+  // Initialize form outside of conditionals
   const [form] = Form.useForm();
 
   // Fetch project data
@@ -67,15 +68,8 @@ export default function EditProjectPage() {
         const data = await response.json();
         setProject(data);
         
-        // Set form values only after we have the data and when form exists
-        form.setFieldsValue({
-          projectId: data.projectId,
-          projectName: data.projectName,
-          description: data.description || '',
-          startDate: data.startDate ? dayjs(data.startDate) : null,
-          endDate: data.endDate ? dayjs(data.endDate) : null,
-          projectManager: data.projectManager
-        });
+        // Mark data as ready to be set into form
+        setFormInitialized(true);
       } catch (error) {
         console.error('Error fetching project:', error);
         messageApi.error('Failed to load project data');
@@ -85,7 +79,21 @@ export default function EditProjectPage() {
     };
 
     fetchProject();
-  }, [projectId, form, router, messageApi]);
+  }, [projectId, router, messageApi]);
+
+  // Set form values in a separate effect after form is mounted and data is ready
+  useEffect(() => {
+    if (project && formInitialized && form) {
+      form.setFieldsValue({
+        projectId: project.projectId,
+        projectName: project.projectName,
+        description: project.description || '',
+        startDate: project.startDate ? dayjs(project.startDate) : null,
+        endDate: project.endDate ? dayjs(project.endDate) : null,
+        projectManager: project.projectManager
+      });
+    }
+  }, [project, form, formInitialized]);
 
   // Handle form submission
   const onFinish = async (values) => {
@@ -191,7 +199,7 @@ export default function EditProjectPage() {
               layout="vertical"
               onFinish={onFinish}
               className="p-2 md:p-4"
-              // We don't need initialValues here since we're using form.setFieldsValue in the useEffect
+              preserve={false}
             >
               <Form.Item
                 name="projectId"

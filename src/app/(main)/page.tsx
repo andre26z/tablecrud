@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Button, Card, Typography, Layout, message } from 'antd';
+import { Button, Card, Typography, Layout, message, Grid } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import DataTable from '@/src/app/components/DataTable';
 import { useDataService } from '@/src/app/services/dataServices';
@@ -9,10 +9,12 @@ import { useRouter } from 'next/navigation';
 
 const { Title } = Typography;
 const { Content } = Layout;
+const { useBreakpoint } = Grid;
 
 export default function HomePage() {
   const { data, loading, error } = useDataService();
   const router = useRouter();
+  const screens = useBreakpoint();
   
   // Show error message if fetch fails
   React.useEffect(() => {
@@ -31,18 +33,17 @@ export default function HomePage() {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'end',
+          justifyContent: screens.lg ? 'flex-end' : 'center',
           alignItems: 'center',
           marginBottom: 16
-          
         }}
       >
-       
         <div>
           <Button 
             type="primary"
             icon={<PlusOutlined />} 
             onClick={handleCreateProject}
+            size={screens.md ? 'middle' : 'large'}
           >
             Create Project
           </Button>

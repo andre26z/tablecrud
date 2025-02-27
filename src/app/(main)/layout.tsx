@@ -62,17 +62,17 @@ const ResponsiveFavoritesCard = () => {
   if (screens.lg) return null;
 
   return (
-    <div className="w-full mx-auto mt-4">
+    <div className="w-full mx-auto mt-4 ">
       <div className="bg-[#282828] rounded-lg overflow-hidden shadow-md border border-[#303030]">
         {/* Title linked to home page for mobile view */}
         <Link href="/">
           <div 
-            className="flex items-center justify-center p-3 bg-[#333] border-b border-[#444] transition-colors duration-200 hover:bg-[#444]" 
+            className=" hidden lg:flex items-center justify-center p-3 bg-[#333] border-b border-[#444] transition-colors duration-200 hover:bg-[#444]" 
             style={{ 
               cursor: 'pointer'
             }}
           >
-            <HomeOutlined className="text-white mr-2" />
+            <HomeOutlined className="text-white mr-2 " />
             <h2 className="text-lg font-medium text-white m-0">My Projects</h2>
           </div>
         </Link>
