@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode support using Tailwind variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --card-background: #ffffff;
+  --border-color: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --card-background: #141414;
+    --border-color: #303030;
+  }
+}
+
+
+
+/* Ensure Tailwind classes override Ant Design styles */
+.ant-card,
+.ant-table {
+  @apply bg-[var(--card-background)] border-[var(--border-color)] text-[var(--foreground)];
+}
+
+/* Table headers */
+.ant-table-thead > tr > th {
+  @apply bg-[#1f1f1f] text-[var(--foreground)] border-b-[var(--border-color)];
+}
+
+/* Table body */
+.ant-table-tbody > tr > td {
+  @apply border-b-[var(--border-color)];
+}
+
+/* Table hover effect */
+.ant-table-tbody > tr:hover > td {
+  @apply bg-[#1a1a1a];
+}
+
+/* Form inputs */
+.ant-input,
+.ant-input-number,
+.ant-select-selector,
+.ant-select-dropdown,
+.ant-form-item-label > label {
+  @apply text-[var(--foreground)] bg-[var(--card-background)] border-[var(--border-color)];
+}
+
+/* Remove unnecessary background from form labels */
+.ant-form-item-label > label {
+  @apply bg-transparent;
+}
+
+/* Apply styles only to tables inside .custom-dark-table */
+.custom-dark-table .ant-table {
+  @apply bg-[var(--card-background)] border-[var(--border-color)] text-[var(--foreground)];
+}
+
+.custom-dark-table .ant-table-thead > tr > th {
+  @apply bg-[#1f1f1f] text-[var(--foreground)] border-b-[var(--border-color)] font-medium;
+}
+
+.custom-dark-table .ant-table-tbody > tr > td {
+  @apply border-b-[var(--border-color)];
+}
+
+/* Hover effect */
+.custom-dark-table .ant-table-tbody > tr:hover > td {
+  @apply bg-[#1a1a1a];
+}
+
+/* Pagination */
+.custom-dark-table .ant-pagination-item {
+  @apply bg-[var(--card-background)] border-[var(--border-color)] text-[var(--foreground)];
+}
+
+.custom-dark-table .ant-pagination-item-active {
+  @apply bg-blue-600 text-white border-blue-600;
+}
+
+/* Fix Table Hover Effect - Make it Gray Instead of White */
+.custom-dark-table .ant-table-tbody > tr:hover > td {
+  background-color: #303030 !important; /* Dark Gray Hover */
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Optional: Ensure the Table Header Matches Dark Theme */
+.custom-dark-table .ant-table-thead > tr > th {
+  background-color: #1E1E1E !important; /* Match Sidebar Background */
+  color: white !important;
+  border-bottom: 1px solid #303030 !important;
+}
+
+/* Make Pagination Text White */
+.custom-dark-table .ant-pagination-item a {
+  color: white !important; /* Ensure pagination numbers are white */
+}
+
+/* Change Pagination Text on Hover */
+.custom-dark-table .ant-pagination-item-active a {
+  color: white !important; /* Keep active page number white */
+  font-weight: bold; /* Optional: Make it stand out */
+}
+
+/* Optional: Make the Next & Prev Arrows White */
+.custom-dark-table .ant-pagination-prev .ant-pagination-item-link,
+.custom-dark-table .ant-pagination-next .ant-pagination-item-link {
+  color: white !important;
+}

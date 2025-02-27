@@ -1,14 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Space, Table, message, Card, Typography, List, Button, Grid, Spin } from 'antd';
+import { Space, Table, message, Spin } from 'antd';
 import type { TableProps } from 'antd';
 import { StarOutlined, StarFilled, EditOutlined } from '@ant-design/icons';
 import { useFavorites } from '@/src/app/context/FavoritesContext';
 import { useRouter } from 'next/navigation';
-
-const { Title, Text } = Typography;
-const { useBreakpoint } = Grid;
 
 interface ProjectType {
   key: string;
@@ -28,18 +25,12 @@ interface DataTableProps {
 const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
   const router = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
-  const screens = useBreakpoint();
   const { refreshFavorites } = useFavorites();
-  const [favorites, setFavorites] = useState<Record<string, boolean>>(
-    data.reduce((acc, project) => {
-      acc[project.key] = project.favorite || false;
-      return acc;
-    }, {} as Record<string, boolean>)
-  );
+  const [favorites, setFavorites] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const newFavorites = data.reduce((acc, project) => {
-      acc[project.key] = project.favorite || favorites[project.key] || false;
+      acc[project.key] = project.favorite || false;
       return acc;
     }, {} as Record<string, boolean>);
     setFavorites(newFavorites);
@@ -48,7 +39,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
   const toggleFavorite = async (projectKey: string) => {
     try {
       const newValue = !favorites[projectKey];
-      setFavorites(prev => ({ ...prev, [projectKey]: newValue }));
+      setFavorites((prev) => ({ ...prev, [projectKey]: newValue }));
 
       const response = await fetch(`/api/projects/${projectKey}/favorite`, {
         method: 'PUT',
@@ -61,18 +52,9 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       await refreshFavorites();
       messageApi.success(newValue ? 'Added to favorites' : 'Removed from favorites');
     } catch (error) {
-      setFavorites(prev => ({ ...prev, [projectKey]: !prev[projectKey] }));
+      setFavorites((prev) => ({ ...prev, [projectKey]: !prev[projectKey] }));
       messageApi.error('Failed to update favorite status');
     }
-  };
-
-  const goToProjectDetails = (projectKey: string) => {
-    router.push(`/details/${projectKey}`);
-  };
-
-  const handleEditClick = (e: React.MouseEvent, projectKey: string) => {
-    e.stopPropagation();
-    router.push(`/edit/${projectKey}`);
   };
 
   const columns: TableProps<ProjectType>['columns'] = [
@@ -81,7 +63,10 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       dataIndex: 'projectName',
       key: 'projectName',
       render: (text, record) => (
-        <a onClick={() => goToProjectDetails(record.key)} className="text-blue-400 hover:underline cursor-pointer">
+        <a
+          onClick={() => router.push(`/details/${record.key}`)}
+          className="text-blue-400 hover:underline cursor-pointer"
+        >
           {text}
         </a>
       ),
@@ -104,10 +89,19 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     {
       title: '',
       key: 'favorite',
-      width: 50,
       render: (_, record) => (
-        <div onClick={(e) => { e.stopPropagation(); toggleFavorite(record.key); }} className="cursor-pointer">
-          {favorites[record.key] ? <StarFilled style={{ color: '#fadb14' }} /> : <StarOutlined style={{ color: '#d9d9d9' }} />}
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleFavorite(record.key);
+          }}
+          className="cursor-pointer"
+        >
+          {favorites[record.key] ? (
+            <StarFilled style={{ color: '#FFD700' }} /> // **Always Yellow Star**
+          ) : (
+            <StarOutlined className="text-gray-400" />
+          )}
         </div>
       ),
     },
@@ -115,8 +109,14 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       title: '',
       key: 'action',
       render: (_, record) => (
-        <Space size="middle">
-          <a onClick={(e) => handleEditClick(e, record.key)} className="text-blue-500 hover:text-blue-700">
+        <Space>
+          <a
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/edit/${record.key}`);
+            }}
+            className="text-blue-500 hover:text-blue-700 flex items-center"
+          >
             <EditOutlined className="mr-1" />
             Edit
           </a>
@@ -125,31 +125,22 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     },
   ];
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen w-full">
-        <Spin size="large" />
-        <div className="mt-3">Loading projects...</div>
-      </div>
-    );
-  }
-
-  return (
-    <>
+  return loading ? (
+    <div className="flex justify-center items-center w-full mt-10">
+      <Spin size="large" />
+      <div className="mt-3 text-[var(--foreground)]">Loading projects...</div>
+    </div>
+  ) : (
+    <div className="w-full">
       {contextHolder}
-      <div className="p-4 md:p-6 w-full">
-        <div className="overflow-x-auto">
-          <Table<ProjectType>
-            columns={columns}
-            dataSource={data}
-            rowKey="key"
-            pagination={{ pageSize: 10, showSizeChanger: false }}
-            scroll={{ x: 'max-content' }}
-            onRow={(record) => ({ onClick: () => goToProjectDetails(record.key), style: { cursor: 'pointer' } })}
-          />
-        </div>
-      </div>
-    </>
+      <Table
+        columns={columns}
+        dataSource={data}
+        rowKey="key"
+        pagination={{ pageSize: 10 }}
+        className="custom-dark-table"
+      />
+    </div>
   );
 };
 

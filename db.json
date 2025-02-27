@@ -4,7 +4,7 @@
       "key": "1",
       "projectId": "PRJ-001",
       "projectName": "22222",
-      "description": "Complete overhaul of company website with new design system and improved UX",
+      "description": "Complete overhaul of company website with new design system and improved wsss",
       "startDate": "2025-01-15",
       "endDate": "2025-04-30",
       "projectManager": "John Smith",
@@ -28,7 +28,7 @@
       "startDate": "2025-03-10",
       "endDate": "2025-05-20",
       "projectManager": "Michael Chen",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "4",
