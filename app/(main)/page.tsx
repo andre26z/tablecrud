@@ -1,13 +1,18 @@
 'use client';
 
 import React from 'react';
-import { Button, Card, Space, message } from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
+import { Button, Card, Typography, Layout, message } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import DataTable from '@/app/components/DataTable';
 import { useDataService } from '@/app/services/dataServices';
+import { useRouter } from 'next/navigation';
+
+const { Title } = Typography;
+const { Content } = Layout;
 
 export default function HomePage() {
-  const { data, loading, error, refreshData } = useDataService();
+  const { data, loading, error } = useDataService();
+  const router = useRouter();
   
   // Show error message if fetch fails
   React.useEffect(() => {
@@ -16,22 +21,44 @@ export default function HomePage() {
     }
   }, [error]);
 
+  // Handle create new project
+  const handleCreateProject = () => {
+    router.push('/create');
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-semibold">Project Management</h1>
-        <Button 
-          icon={<ReloadOutlined />} 
-          onClick={refreshData}
-          loading={loading}
-        >
-          Refresh
-        </Button>
+    <Content style={{ padding: 24 }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 16
+        }}
+      >
+        <Title level={4} style={{ margin: 0, color: '#fff' }}>
+          Project Management
+        </Title>
+        <div>
+          <Button 
+            type="primary"
+            icon={<PlusOutlined />} 
+            onClick={handleCreateProject}
+          >
+            Create Project
+          </Button>
+        </div>
       </div>
       
-      <Card>
+      <Card
+        style={{ 
+          background: '#282828',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+        }}
+        bordered={false}
+      >
         <DataTable data={data || []} loading={loading} />
       </Card>
-    </div>
+    </Content>
   );
 }

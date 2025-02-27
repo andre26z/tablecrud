@@ -59,6 +59,15 @@
       "projectManager": "James Charles",
       "key": "6",
       "favorite": false
+    },
+    {
+      "projectId": "123",
+      "projectName": "NEW PROJECT",
+      "description": "new generation",
+      "startDate": "2025-02-06",
+      "endDate": "2025-02-18",
+      "projectManager": "ssss",
+      "key": "7"
     }
   ]
 }
