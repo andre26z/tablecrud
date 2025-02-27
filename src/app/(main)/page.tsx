@@ -43,7 +43,7 @@ export default function HomePage() {
             type="primary"
             icon={<PlusOutlined />} 
             onClick={handleCreateProject}
-            size={screens.md ? 'middle' : 'large'}
+            size='middle'
           >
             Create Project
           </Button>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Space, Table, message, Spin, Tooltip, Modal } from 'antd';
 import type { TableProps } from 'antd';
 import { StarOutlined, StarFilled, EditOutlined, CloseCircleOutlined } from '@ant-design/icons';
@@ -22,95 +22,12 @@ interface DataTableProps {
   loading: boolean;
 }
 
-// Custom modal for dark theme
-const showDarkConfirmModal = (
-  title: string, 
-  content: string, 
-  onOk: () => Promise<void>
-) => {
-  const modal = Modal.confirm({
-    title: <span className="text-white">{title}</span>,
-    content: <span className="text-gray-300">{content}</span>,
-    okText: 'Yes, clear all',
-    okType: 'danger',
-    cancelText: 'Cancel',
-    onOk,
-    className: 'dark-theme-modal',
-    // Apply dark styles to the modal
-    okButtonProps: {
-      style: {
-        backgroundColor: '#ff4d4f',
-        borderColor: '#ff4d4f',
-      }
-    },
-    cancelButtonProps: {
-      style: {
-        backgroundColor: '#303030',
-        borderColor: '#444',
-        color: '#ddd'
-      }
-    },
-    // Force dark styles on the modal content
-    modalRender: (node) => (
-      <div style={{ 
-        color: '#fff',
-      }}>
-        {node}
-      </div>
-    ),
-  });
-
-  // Apply custom styles to modal container
-  setTimeout(() => {
-    const modalContainer = document.querySelector('.dark-theme-modal .ant-modal-content');
-    if (modalContainer) {
-      (modalContainer as HTMLElement).style.backgroundColor = '#1E1E1E';
-      (modalContainer as HTMLElement).style.borderColor = '#303030';
-      (modalContainer as HTMLElement).style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.5)';
-    }
-  }, 10);
-
-  return modal;
-};
-
 const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
   const router = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
   const { refreshFavorites } = useFavorites();
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
   const [clearingFavorites, setClearingFavorites] = useState(false);
-
-  // Add a style tag for custom modal styling
-  useEffect(() => {
-    const styleTag = document.createElement('style');
-    styleTag.innerHTML = `
-      .dark-theme-modal .ant-modal-content {
-        background-color: #1E1E1E !important;
-        border: 1px solid #303030 !important;
-      }
-      .dark-theme-modal .ant-modal-header {
-        background-color: #1E1E1E !important;
-        border-bottom: 1px solid #303030 !important;
-      }
-      .dark-theme-modal .ant-modal-title {
-        color: #fff !important;
-      }
-      .dark-theme-modal .ant-modal-close {
-        color: #888 !important;
-      }
-      .dark-theme-modal .ant-modal-close:hover {
-        color: #fff !important;
-      }
-      .dark-theme-modal .ant-modal-body {
-        color: #ddd !important;
-      }
-    `;
-    document.head.appendChild(styleTag);
-    
-    return () => {
-      document.head.removeChild(styleTag);
-    };
-  }, []);
 
   useEffect(() => {
     const newFavorites = data.reduce((acc, project) => {
@@ -141,58 +58,82 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     }
   };
 
-  const clearAllFavorites = async () => {
-    // Get all project keys that are currently favorited
-    const favoritedProjects = Object.entries(favorites)
-      .filter(([_, isFavorite]) => isFavorite)
-      .map(([key]) => key);
-    
-    if (favoritedProjects.length === 0) {
-      messageApi.info('No favorites to clear');
-      return;
-    }
-    
-    showDarkConfirmModal(
-      'Clear all favorites',
-      'Are you sure you want to remove all favorite projects? This action cannot be undone.',
-      async () => {
-        try {
-          setClearingFavorites(true);
-          
-          // Create a temporary object to optimistically update UI
-          const tempFavorites = { ...favorites };
-          favoritedProjects.forEach(key => {
-            tempFavorites[key] = false;
-          });
-          setFavorites(tempFavorites);
-          
-          // Make API calls to unfavorite all projects
-          const promises = favoritedProjects.map(projectKey => 
-            fetch(`/api/projects/${projectKey}/favorite`, {
-              method: 'PUT',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ favorite: false }),
-            })
-          );
-          
-          await Promise.all(promises);
-          await refreshFavorites();
-          
-          messageApi.success('All favorites have been cleared');
-        } catch (error) {
-          // Restore favorites state in case of error
-          const newFavorites = data.reduce((acc, project) => {
-            acc[project.key] = project.favorite || false;
-            return acc;
-          }, {} as Record<string, boolean>);
-          setFavorites(newFavorites);
-          
-          messageApi.error('Failed to clear all favorites');
-        } finally {
-          setClearingFavorites(false);
-        }
+  // This is now a memoized callback to prevent recreation on each render
+  const handleClearFavorites = useCallback(async () => {
+    try {
+      setClearingFavorites(true);
+      
+      // Get all project keys that are currently favorited
+      const favoritedProjects = Object.entries(favorites)
+        .filter(([_, isFavorite]) => isFavorite)
+        .map(([key]) => key);
+      
+      if (favoritedProjects.length === 0) {
+        messageApi.info('No favorites to clear');
+        setClearingFavorites(false);
+        return;
       }
-    );
+      
+      // Create a temporary object to optimistically update UI
+      const tempFavorites = { ...favorites };
+      favoritedProjects.forEach(key => {
+        tempFavorites[key] = false;
+      });
+      setFavorites(tempFavorites);
+      
+      // Make API calls to unfavorite all projects
+      const promises = favoritedProjects.map(projectKey => 
+        fetch(`/api/projects/${projectKey}/favorite`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ favorite: false }),
+        })
+      );
+      
+      await Promise.all(promises);
+      await refreshFavorites();
+      
+      messageApi.success('All favorites have been cleared');
+    } catch (error) {
+      // Restore favorites state in case of error
+      const newFavorites = data.reduce((acc, project) => {
+        acc[project.key] = project.favorite || false;
+        return acc;
+      }, {} as Record<string, boolean>);
+      setFavorites(newFavorites);
+      
+      messageApi.error('Failed to clear all favorites');
+    } finally {
+      setClearingFavorites(false);
+    }
+  }, [favorites, data, messageApi, refreshFavorites]);
+
+  // Separate the modal creation from the handler to avoid render-time messaging
+  const clearAllFavorites = () => {
+    Modal.confirm({
+      title: 'Clear all favorites',
+      content: 'Are you sure you want to remove all favorite projects? This action cannot be undone.',
+      okText: 'Yes, clear all',
+      okType: 'danger',
+      cancelText: 'Cancel',
+      className: 'custom-dark-modal', // Add this custom class for your CSS targeting
+      onOk: handleClearFavorites,
+      // Custom button styling
+      okButtonProps: {
+        style: {
+          backgroundColor: '#d32029',
+          borderColor: '#d32029',
+          color: 'white',
+        }
+      },
+      cancelButtonProps: {
+        style: {
+          backgroundColor: '#333',
+          borderColor: '#444',
+          color: 'white',
+        }
+      },
+    });
   };
 
   const columns: TableProps<ProjectType>['columns'] = [
@@ -233,10 +174,9 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     {
       title: () => (
         <div className="flex items-center">
-          
           <Tooltip title="Clear all favorites">
             <CloseCircleOutlined 
-              className="text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
+              className="text-gray-500 bg-gray-800 hover:text-red-500 transition-colors cursor-pointer"
               onClick={clearAllFavorites}
             />
           </Tooltip>
@@ -281,27 +221,47 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     },
   ];
 
-  return loading || clearingFavorites ? (
-    <div className="flex justify-center items-center w-full mt-10">
-      <Spin size="large" />
-      <div className="mt-3 text-[var(--foreground)]">
-        {loading ? 'Loading projects...' : 'Clearing favorites...'}
-      </div>
-    </div>
-  ) : (
-    <div className="mx-0.5 w-[calc(100%-4px)]">
+  return (
+    <>
+      {/* Add the specific modal styling without affecting the rest of your app */}
+      <style jsx global>{`
+        .custom-dark-modal .ant-modal-content,
+        .custom-dark-modal .ant-modal-header,
+        .custom-dark-modal .ant-modal-confirm-title,
+        .custom-dark-modal .ant-modal-confirm-content {
+          background-color: #1f1f1f !important;
+          color: white !important;
+        }
+        
+        .custom-dark-modal .ant-modal-confirm-body > span {
+          color: white !important;
+        }
+      `}</style>
+      
       {contextHolder}
-      <div className="w-full overflow-x-auto">
-        <Table
-          columns={columns}
-          dataSource={data}
-          rowKey="key"
-          pagination={{ pageSize: 10 }}
-          className="custom-dark-table"
-          scroll={{ x: 'max-content' }}
-        />
-      </div>
-    </div>
+      
+      {loading || clearingFavorites ? (
+        <div className="flex justify-center items-center w-full mt-10">
+          <Spin size="large" />
+          <div className="mt-3 text-[var(--foreground)]">
+            {loading ? 'Loading projects...' : 'Clearing favorites...'}
+          </div>
+        </div>
+      ) : (
+        <div className="mx-0.5 w-[calc(100%-4px)]">
+          <div className="w-full overflow-x-auto">
+            <Table
+              columns={columns}
+              dataSource={data}
+              rowKey="key"
+              pagination={{ pageSize: 10 }}
+              className="custom-dark-table"
+              scroll={{ x: 'max-content' }}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

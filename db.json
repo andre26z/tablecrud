@@ -7,7 +7,7 @@
       "description": "Complete overhaul of company website with new design system and improved wsss",
       "startDate": "2025-01-15",
       "endDate": "2025-04-30",
-      "projectManager": "John Smith",
+      "projectManager": "John Smiths",
       "favorite": false
     },
     {
@@ -18,7 +18,7 @@
       "startDate": "2025-02-01",
       "endDate": "2025-06-15",
       "projectManager": "Sarah Johnson",
-      "favorite": true
+      "favorite": false
     },
     {
       "key": "3",
@@ -28,7 +28,7 @@
       "startDate": "2025-03-10",
       "endDate": "2025-05-20",
       "projectManager": "Michael Chen",
-      "favorite": true
+      "favorite": false
     },
     {
       "key": "4",
@@ -38,7 +38,7 @@
       "startDate": "2025-02-15",
       "endDate": "2025-07-30",
       "projectManager": "Emily Rodriguez",
-      "favorite": true
+      "favorite": false
     },
     {
       "key": "5",
@@ -48,7 +48,7 @@
       "startDate": "2025-04-01",
       "endDate": "2025-09-15",
       "projectManager": "David Wilson",
-      "favorite": true
+      "favorite": false
     },
     {
       "projectId": "666",
@@ -183,7 +183,7 @@
     {
       "key": "19",
       "projectId": "PRJ-015",
-      "projectName": "Social Media Automation",
+      "projectName": "Social Media Automation222222",
       "description": "Creating automated tools for social media management",
       "startDate": "2025-05-25",
       "endDate": "2025-11-05",

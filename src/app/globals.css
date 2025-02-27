@@ -20,8 +20,6 @@
   }
 }
 
-
-
 /* Ensure Tailwind classes override Ant Design styles */
 .ant-card,
 .ant-table {
@@ -193,4 +191,122 @@
 /* Add this to your global CSS */
 .project-name-title {
   color: black !important;
+}
+
+/* Dark Modal Styling - START */
+.ant-modal .ant-modal-content {
+  background-color: #1f1f1f !important;
+  color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+.ant-modal .ant-modal-header {
+  background-color: #1f1f1f !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+.ant-modal .ant-modal-title {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.ant-modal .ant-modal-close-x {
+  color: #999 !important;
+}
+
+.ant-modal .ant-modal-close-x:hover {
+  color: white !important;
+}
+
+.ant-modal .ant-modal-body {
+  color: #e0e0e0 !important;
+}
+
+.ant-modal .ant-modal-footer {
+  border-top: 1px solid #333 !important;
+}
+
+/* Modal buttons styling */
+.ant-modal .ant-btn-default {
+  background-color: #333 !important;
+  border-color: #444 !important;
+  color: white !important;
+}
+
+.ant-modal .ant-btn-default:hover {
+  background-color: #444 !important;
+  border-color: #555 !important;
+}
+
+.ant-modal .ant-btn-primary {
+  background-color: #1668dc !important;
+  border-color: #1668dc !important;
+}
+
+.ant-modal .ant-btn-primary:hover {
+  background-color: #1677ff !important;
+  border-color: #1677ff !important;
+}
+
+.ant-modal .ant-btn-primary.ant-btn-dangerous {
+  background-color: #d32029 !important;
+  border-color: #d32029 !important;
+}
+
+.ant-modal .ant-btn-primary.ant-btn-dangerous:hover {
+  background-color: #e84749 !important;
+  border-color: #e84749 !important;
+}
+
+/* Modal Select Dropdown */
+.ant-modal .ant-select-dropdown {
+  background-color: #2c2c2c !important;
+  border: 1px solid #444 !important;
+}
+
+.ant-modal .ant-select-item {
+  color: #e0e0e0 !important;
+}
+
+.ant-modal .ant-select-item-option-selected {
+  background-color: #1668dc !important;
+  color: white !important;
+}
+
+.ant-modal .ant-select-item-option-active {
+  background-color: #303030 !important;
+}
+/* Dark Modal Styling - END */
+
+/* Modal text color fix with higher specificity */
+.ant-modal .ant-modal-content,
+.ant-modal .ant-modal-header .ant-modal-title,
+.ant-modal .ant-modal-body,
+.ant-modal .ant-modal-confirm-title,
+.ant-modal .ant-modal-confirm-content {
+  color: white !important;
+}
+
+/* Target the specific text elements inside modal with even higher specificity */
+.ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-title {
+  color: white !important;
+}
+
+.ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-content {
+  color: #e0e0e0 !important;
+}
+
+/* Make sure all span and p tags within the modal have white text */
+.ant-modal-content span,
+.ant-modal-content p,
+.ant-modal-confirm-body span,
+.ant-modal-confirm-body p {
+  color: white !important;
+}
+
+/* Target the confirm modal specifically (for the "Clear all favorites" modal) */
+.ant-modal-confirm-confirm .ant-modal-confirm-body .ant-modal-confirm-title,
+.ant-modal-confirm-confirm .ant-modal-confirm-body .ant-modal-confirm-content {
+  color: white !important;
 }
