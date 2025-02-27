@@ -43,7 +43,7 @@ const FavoritesList = ({ className = '' }) => {
         label: (
           <Link
             href={`/edit/${project.key}`}
-            className="flex items-center transition duration-200"
+            className="flex items-center transition duration-200 truncate"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -52,6 +52,9 @@ const FavoritesList = ({ className = '' }) => {
               transition: 'background 0.2s ease-in-out',
               color: '#EDEDED',
               textDecoration: 'none',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             }}
           >
             {project.projectName}
@@ -62,6 +65,7 @@ const FavoritesList = ({ className = '' }) => {
           padding: '10px',
           borderBottom: '1px solid #303030',
           backgroundColor: isActive ? '#303030' : 'transparent',
+          width: '100%',
         },
         className: `${isActive ? 'bg-gray-800' : 'hover:bg-gray-800'}`
       };
@@ -69,21 +73,25 @@ const FavoritesList = ({ className = '' }) => {
   ];
 
   return (
-    <Menu
-      mode="inline"
-      className={`border-none rounded-lg ${className}`}
-      style={{
-        backgroundColor: '#1E1E1E',
-        color: '#EDEDED',
-        border: '1px solid #303030',
-        padding: '8px',
-        maxHeight: '720px', // Set max height
-        overflowY: favoriteProjects.length > maxVisibleItems ? 'auto' : 'visible',
-        scrollbarWidth: 'thin', // Firefox
-        scrollbarColor: '#555 #222', // Dark theme scrollbar
-      }}
-      items={menuItems}
-    />
+    <div className={`w-full ${className}`}>
+      <Menu
+        mode="inline"
+        className="border-none rounded-lg w-full"
+        style={{
+          backgroundColor: '#1E1E1E',
+          color: '#EDEDED',
+          border: '1px solid #303030',
+          padding: '8px',
+          maxHeight: '80vh', // More responsive max height using viewport height
+          overflowY: favoriteProjects.length > maxVisibleItems ? 'auto' : 'visible',
+          overflowX: 'hidden', // Prevent horizontal scrolling
+          scrollbarWidth: 'thin', // Firefox
+          scrollbarColor: '#555 #222', // Dark theme scrollbar
+          width: '100%', // Ensure full width
+        }}
+        items={menuItems}
+      />
+    </div>
   );
 };
 

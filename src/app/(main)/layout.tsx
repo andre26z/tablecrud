@@ -13,9 +13,6 @@ import FavoritesList from '@/src/app/components/FavoritesList';
 const { Content, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
-// Sidebar content
-
-
 // Sidebar component (only for md+ screens)
 const ProjectSidebar = () => {
   const screens = useBreakpoint();
@@ -24,14 +21,19 @@ const ProjectSidebar = () => {
 
   return (
     <Sider
-      width={400}
-      
+      width={300}
+      breakpoint="lg"
+      collapsedWidth="0"
       style={{
-        backgroundColor: '#1E1E1E', // Match DataTable's background
-        padding: '48px 2px 2px 2px ',
-      
-        borderRight: '1px solid #303030', // Subtle border like table lines
-        boxShadow: '2px 0 4px rgba(0,0,0,0.2)', // Slight shadow for depth
+        backgroundColor: '#1E1E1E',
+        padding: '48px 0.5px 0.5px 0.5px',
+        borderRight: '1px solid #303030',
+        boxShadow: '2px 0 4px rgba(0,0,0,0.2)',
+        position: 'fixed',
+        left: 0,
+        height: '100vh',
+        zIndex: 10,
+        overflow: 'auto'
       }}
     >
       <FavoritesList />
@@ -46,9 +48,15 @@ const MobileFavoritesCard = () => {
   if (screens.md) return null;
 
   return (
-    <Card title="Favorite Projects" className="mt-4 shadow-md bg-[#282828] text-white">
-      <FavoritesList />
-    </Card>
+    <div className="w-[calc(100%-4px)] mx-0.5 mt-4">
+      <Card 
+        title="Favorite Projects" 
+        className="shadow-md bg-[#282828] text-white w-full overflow-hidden"
+        
+      >
+        <FavoritesList />
+      </Card>
+    </div>
   );
 };
 
@@ -84,7 +92,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <ProjectSidebar />
 
           {/* Main Content */}
-          <Layout className={`w-full ${screens.md ? 'ml-[0px]' : 'ml-0'}`}>
+          <Layout className={`w-full ${screens.md ? 'ml-[300px]' : 'ml-0'}`}>
             <Content className="bg-[#212121] p-4 w-full flex flex-col items-center">
               <div className="w-full max-w-6xl">
                 {children}

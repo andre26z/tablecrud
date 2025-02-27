@@ -11,11 +11,13 @@ import {
   Space, 
   message,
   ConfigProvider,
-  Spin
+  Spin,
+  Grid
 } from 'antd';
 import { ArrowLeftOutlined, SaveOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
+const { useBreakpoint } = Grid;
 
 export default function CreateProjectPage() {
   const router = useRouter();
@@ -24,6 +26,7 @@ export default function CreateProjectPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(null);
+  const screens = useBreakpoint();
   
   // Create message instance for antd v5 compatibility
   const [messageApi, contextHolder] = message.useMessage();
@@ -95,23 +98,10 @@ export default function CreateProjectPage() {
     router.push('/');
   };
 
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: '2rem 1rem',
-  };
-
-  const wrapperStyle = {
-    width: '100%',
-    maxWidth: '70%',
-    color: 'white',
-  };
-
   // Render form component (will be conditionally displayed)
   const formComponent = (
-    <div style={containerStyle}>
-      <div style={wrapperStyle}>
+    <div className="w-full flex justify-center">
+      <div className={`mx-0.5 w-[calc(100%-4px)] ${screens.md ? 'max-w-3xl' : 'max-w-full'}`}>
         {contextHolder}
         <ConfigProvider
           theme={{
@@ -145,12 +135,13 @@ export default function CreateProjectPage() {
           }}
         >
           <Card
-            title="Create New Project"
+            title={<span className="text-base md:text-xl">Create New Project</span>}
             className="shadow-md rounded-lg"
             extra={
               <Button 
                 icon={<ArrowLeftOutlined />} 
                 onClick={handleCancel}
+                size={screens.md ? "middle" : "small"}
               >
                 Back
               </Button>
@@ -160,7 +151,7 @@ export default function CreateProjectPage() {
               form={form}
               layout="vertical"
               onFinish={onFinish}
-              className="p-4"
+              className="p-2 md:p-4"
             >
               <Form.Item
                 name="projectId"
@@ -221,16 +212,20 @@ export default function CreateProjectPage() {
               </Form.Item>
 
               <Form.Item>
-                <Space>
+                <Space size={screens.md ? "middle" : "small"} className="flex flex-wrap">
                   <Button 
                     type="primary" 
                     htmlType="submit" 
                     icon={<SaveOutlined />}
                     loading={submitting}
+                    size={screens.md ? "middle" : "small"}
                   >
                     Create Project
                   </Button>
-                  <Button onClick={handleCancel}>
+                  <Button 
+                    onClick={handleCancel}
+                    size={screens.md ? "middle" : "small"}
+                  >
                     Cancel
                   </Button>
                 </Space>
@@ -244,17 +239,10 @@ export default function CreateProjectPage() {
 
   // Full-page loading spinner
   const loadingSpinner = (message) => (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      height: '100vh',
-      width: '100%',
-      background: '#121212'
-    }}>
-      <div style={{ textAlign: 'center' }}>
+    <div className="flex justify-center items-center h-screen w-full bg-[#121212]">
+      <div className="text-center">
         <Spin size="large" />
-        <div style={{ marginTop: '12px', color: '#FFFFFF' }}>{message}</div>
+        <div className="mt-3 text-white">{message}</div>
       </div>
     </div>
   );

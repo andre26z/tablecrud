@@ -11,7 +11,8 @@ import {
   Space, 
   message, 
   Spin,
-  ConfigProvider 
+  ConfigProvider,
+  Grid
 } from 'antd';
 import { ArrowLeftOutlined, SaveOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
@@ -28,11 +29,13 @@ interface ProjectType {
 }
 
 const { TextArea } = Input;
+const { useBreakpoint } = Grid;
 
 export default function EditProjectPage() {
   const router = useRouter();
   const params = useParams();
   const projectId = params.id as string;
+  const screens = useBreakpoint();
   
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -123,41 +126,21 @@ export default function EditProjectPage() {
     router.push('/');
   };
 
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: '2rem 1rem',
-  };
-
-  const wrapperStyle = {
-    width: '100%',
-    maxWidth: '70%',
-    color: 'white',
-  };
-
   // Loading state
   if (loading) {
-     return (
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            height: '100vh',
-            width: '100%',
-            background: '#121212'
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <Spin size="large" />
-              <div style={{ marginTop: '12px', color: '#FFFFFF' }}>Loading project data...</div>
-            </div>
-          </div>
-        );
+    return (
+      <div className="flex justify-center items-center h-screen w-full bg-[#121212]">
+        <div className="text-center">
+          <Spin size="large" />
+          <div className="mt-3 text-white">Loading project data...</div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div style={containerStyle}>
-      <div style={wrapperStyle}>
+    <div className="w-full flex justify-center">
+      <div className={`mx-0.5 w-[calc(100%-4px)] ${screens.md ? 'max-w-3xl' : 'max-w-full'}`}>
         {contextHolder}
         <ConfigProvider
           theme={{
@@ -191,12 +174,13 @@ export default function EditProjectPage() {
           }}
         >
           <Card
-            title="Edit Project"
+            title={<span className="text-base md:text-xl">Edit Project</span>}
             className="shadow-md rounded-lg"
             extra={
               <Button 
                 icon={<ArrowLeftOutlined />} 
                 onClick={handleCancel}
+                size={screens.md ? "middle" : "small"}
               >
                 Back
               </Button>
@@ -206,7 +190,7 @@ export default function EditProjectPage() {
               form={form}
               layout="vertical"
               onFinish={onFinish}
-              className="p-4"
+              className="p-2 md:p-4"
               // We don't need initialValues here since we're using form.setFieldsValue in the useEffect
             >
               <Form.Item
@@ -268,16 +252,20 @@ export default function EditProjectPage() {
               </Form.Item>
 
               <Form.Item>
-                <Space>
+                <Space size={screens.md ? "middle" : "small"} className="flex flex-wrap">
                   <Button 
                     type="primary" 
                     htmlType="submit" 
                     icon={<SaveOutlined />}
                     loading={submitting}
+                    size={screens.md ? "middle" : "small"}
                   >
                     Save Changes
                   </Button>
-                  <Button onClick={handleCancel}>
+                  <Button 
+                    onClick={handleCancel}
+                    size={screens.md ? "middle" : "small"}
+                  >
                     Cancel
                   </Button>
                 </Space>

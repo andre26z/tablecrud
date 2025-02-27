@@ -174,7 +174,7 @@
 /* Make sure the sider itself maintains its width */
 .ant-layout-sider {
   flex: 0 0 auto !important;
-  max-width: 400px !important; /* Adjust to your sidebar width */
+  width: 400px !important; /* Adjust to your sidebar width */
   min-width: 200px !important; /* Adjust to your sidebar width */
 }
 
@@ -188,4 +188,9 @@
   display: flex !important;
   flex-direction: row !important;
   min-height: 100vh !important;
+}
+
+/* Add this to your global CSS */
+.project-name-title {
+  color: black !important;
 }

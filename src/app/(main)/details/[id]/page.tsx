@@ -10,7 +10,8 @@ import {
   Spin,
   ConfigProvider,
   Typography,
-  Divider
+  Divider,
+  Grid
 } from 'antd';
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
@@ -27,11 +28,13 @@ interface ProjectType {
 }
 
 const { Title, Text, Paragraph } = Typography;
+const { useBreakpoint } = Grid;
 
 export default function ProjectDetailsPage() {
   const router = useRouter();
   const params = useParams();
   const projectId = params.id as string;
+  const screens = useBreakpoint();
   
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState<ProjectType | null>(null);
@@ -88,49 +91,18 @@ export default function ProjectDetailsPage() {
   // Loading state
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh',
-        width: '100%' 
-      }}>
-        <div style={{ textAlign: 'center' }}>
+      <div className="flex justify-center items-center h-screen w-full bg-[#121212]">
+        <div className="text-center">
           <Spin size="large" />
-          <div style={{ marginTop: '12px', color: '#FFFFFF' }}>Loading project details...</div>
+          <div className="mt-3 text-white">Loading project details...</div>
         </div>
       </div>
     );
   }
 
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: '2rem 1rem',
-  };
-
-  const wrapperStyle = {
-    width: '100%',
-    maxWidth: '70%',
-    color: 'white',
-  };
-
-  const labelStyle = {
-    fontSize: '14px',
-    color: 'rgba(255, 255, 255, 0.65)',
-    marginBottom: '4px',
-  };
-
-  const valueStyle = {
-    fontSize: '16px',
-    color: 'white',
-    marginBottom: '16px',
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={wrapperStyle}>
+    <div className="w-full flex justify-center">
+      <div className={`mx-0.5 w-[calc(100%-4px)] ${screens.md ? 'max-w-3xl' : 'max-w-full'}`}>
         {contextHolder}
         <ConfigProvider
           theme={{
@@ -141,8 +113,9 @@ export default function ProjectDetailsPage() {
                 colorBgContainer: 'var(--card-background)',
               },
               Typography: {
-                colorText: 'white',
+                colorText: '#',
                 colorTextDescription: 'rgba(255, 255, 255, 0.65)',
+                
               },
               Button: {
                 colorText: 'white',
@@ -152,78 +125,79 @@ export default function ProjectDetailsPage() {
           }}
         >
           <Card
-            title="Project Details"
+            title={<span className="text-base md:text-xl">Details</span>}
             className="shadow-md rounded-lg"
             extra={
-              <Space>
+              <Space size={screens.md ? "middle" : "small"} className="flex flex-wrap">
                 <Button 
                   icon={<EditOutlined />} 
                   onClick={handleEdit}
                   type="primary"
+                  size={screens.md ? "middle" : "small"}
                 >
                   Edit Project
                 </Button>
                 <Button 
                   icon={<ArrowLeftOutlined />} 
                   onClick={handleBack}
+                  size={screens.md ? "middle" : "small"}
                 >
                   Back
                 </Button>
               </Space>
             }
           >
-            <div className="p-4">
-              <div className="mb-6">
-                <Text style={labelStyle}>Project ID</Text>
-                <Paragraph style={valueStyle}>
+            <div className="p-2 md:p-4">
+              <div className="mb-4 md:mb-6">
+                <Text className="text-sm text-gray-400">Project ID</Text>
+                <Paragraph className="text-white text-base md:text-lg mt-1">
                   {project?.projectId || 'Not available'}
                 </Paragraph>
               </div>
               
-              <div className="mb-6">
-                <Text style={labelStyle}>Project Name</Text>
-                <Paragraph style={valueStyle}>
-                  <Title level={4} style={{ color: 'white', margin: 0 }}>
-                    {project?.projectName || 'Not available'}
-                  </Title>
-                </Paragraph>
+            <div className="mb-4 md:mb-6">
+            <Text className="text-sm text-gray-400">Project Name</Text>
+            <div className="mt-1">
+              {/* Use a regular div instead of Typography.Title */}
+              <div style={{ color: 'white', fontWeight: 'bold' }} className="text-xl md:text-2xl font-medium">
+                {project?.projectName || 'Not available'}
               </div>
+            </div>
+          </div>
               
-              <Divider style={{ borderColor: '#303030' }} />
+              <Divider className="border-gray-700 my-3 md:my-4" />
               
-              <div className="mb-6">
-                <Text style={labelStyle}>Description</Text>
-                <Paragraph style={valueStyle}>
+              <div className="mb-4 md:mb-6">
+                <Text className="text-sm text-gray-400">Description</Text>
+                <Paragraph className="text-white text-base mt-1">
                   {project?.description || 'No description provided'}
                 </Paragraph>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <Text style={labelStyle}>Start Date</Text>
-                  <Paragraph style={valueStyle}>
+                  <Text className="text-sm text-gray-400">Start Date</Text>
+                  <Paragraph className="text-white text-base md:text-lg mt-1">
                     {formatDate(project?.startDate)}
                   </Paragraph>
                 </div>
                 
                 <div>
-                  <Text style={labelStyle}>End Date</Text>
-                  <Paragraph style={valueStyle}>
+                  <Text className="text-sm text-gray-400">End Date</Text>
+                  <Paragraph className="text-white text-base md:text-lg mt-1">
                     {formatDate(project?.endDate)}
                   </Paragraph>
                 </div>
               </div>
               
-              <div className="mb-6">
-                <Text style={labelStyle}>Project Manager</Text>
-                <Paragraph style={valueStyle}>
+              <div className="mb-4 md:mb-6">
+                <Text className="text-sm text-gray-400">Project Manager</Text>
+                <Paragraph className="text-white text-base md:text-lg mt-1">
                   {project?.projectManager || 'Not assigned'}
                 </Paragraph>
               </div>
               
-              <Divider style={{ borderColor: '#303030' }} />
-              
-              
+              <Divider className="border-gray-700 my-3 md:my-4" />
             </div>
           </Card>
         </ConfigProvider>
