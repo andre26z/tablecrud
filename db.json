@@ -38,7 +38,7 @@
       "startDate": "2025-02-15",
       "endDate": "2025-07-30",
       "projectManager": "Emily Rodriguez",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "5",
@@ -48,7 +48,7 @@
       "startDate": "2025-04-01",
       "endDate": "2025-09-15",
       "projectManager": "David Wilson",
-      "favorite": false
+      "favorite": true
     },
     {
       "projectId": "666",
@@ -58,7 +58,7 @@
       "endDate": "2025-02-04",
       "projectManager": "James Charles",
       "key": "6",
-      "favorite": false
+      "favorite": true
     }
   ]
 }

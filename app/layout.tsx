@@ -1,19 +1,14 @@
-import './globals.css';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'My App',
-  description: 'App with Ant Design layout',
-};
-
+// For App Router (app/layout.tsx)
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="..." suppressHydrationWarning>
+        {children}
+      </body>
     </html>
-  );
+  )
 }
