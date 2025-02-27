@@ -1,0 +1,64 @@
+{
+  "projects": [
+    {
+      "key": "1",
+      "projectId": "PRJ-001",
+      "projectName": "22222",
+      "description": "Complete overhaul of company website with new design system and improved UX",
+      "startDate": "2025-01-15",
+      "endDate": "2025-04-30",
+      "projectManager": "John Smith",
+      "favorite": false
+    },
+    {
+      "key": "2",
+      "projectId": "PRJ-002",
+      "projectName": "Mobile App Development",
+      "description": "Building cross-platform mobile application for iOS and Android",
+      "startDate": "2025-02-01",
+      "endDate": "2025-06-15",
+      "projectManager": "Sarah Johnson",
+      "favorite": false
+    },
+    {
+      "key": "3",
+      "projectId": "PRJ-003",
+      "projectName": "223333313123123",
+      "description": "Migrating from legacy database to cloud-based solution",
+      "startDate": "2025-03-10",
+      "endDate": "2025-05-20",
+      "projectManager": "Michael Chen",
+      "favorite": false
+    },
+    {
+      "key": "4",
+      "projectId": "PRJ-004",
+      "projectName": "CRM Integration",
+      "description": "Integrating new CRM system with existing business processes",
+      "startDate": "2025-02-15",
+      "endDate": "2025-07-30",
+      "projectManager": "Emily Rodriguez",
+      "favorite": false
+    },
+    {
+      "key": "5",
+      "projectId": "PRJ-005",
+      "projectName": "AI Implementation",
+      "description": "Implementing machine learning models for business intelligence",
+      "startDate": "2025-04-01",
+      "endDate": "2025-09-15",
+      "projectManager": "David Wilson",
+      "favorite": false
+    },
+    {
+      "projectId": "666",
+      "projectName": "Projeto Novo",
+      "description": "Cool Project",
+      "startDate": "2025-02-03",
+      "endDate": "2025-02-04",
+      "projectManager": "James Charles",
+      "key": "6",
+      "favorite": false
+    }
+  ]
+}

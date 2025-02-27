@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+/* Override any Ant Design styles that might be causing background issues */
+.ant-layout {
+  background: white !important;
+}
+
+.ant-card {
+  background: rgb(230, 224, 224) !important;
+}
