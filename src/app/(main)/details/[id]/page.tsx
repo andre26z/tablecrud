@@ -101,7 +101,7 @@ export default function ProjectDetailsPage() {
   }
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center pt-[52px]">
       <div className={`mx-0.5 w-[calc(100%-4px)] ${screens.md ? 'max-w-3xl' : 'max-w-full'}`}>
         {contextHolder}
         <ConfigProvider

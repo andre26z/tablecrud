@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Layout, Menu, ConfigProvider, theme, Spin, Card, Grid } from 'antd';
-import type { MenuProps } from 'antd';
+import React, { useEffect } from 'react';
+import { Layout, ConfigProvider, Spin, Card, Grid } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import Link from 'next/link';
 import { FavoritesProvider, useFavorites } from '@/src/app/context/FavoritesContext';
@@ -13,20 +12,20 @@ import FavoritesList from '@/src/app/components/FavoritesList';
 const { Content, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
-// Sidebar component (only for md+ screens)
+// Sidebar component - only visible on lg screens (1024px+)
 const ProjectSidebar = () => {
   const screens = useBreakpoint();
 
-  if (!screens.md) return null;
+  // Only render sidebar on lg screens (1024px+)
+  if (!screens.lg) return null;
 
   return (
     <Sider
       width={300}
-      breakpoint="lg"
       collapsedWidth="0"
       style={{
         backgroundColor: '#1E1E1E',
-        padding: '48px 0.5px 0.5px 0.5px',
+        padding: '68px 0.5px 0.5px 0.5px',
         borderRight: '1px solid #303030',
         boxShadow: '2px 0 4px rgba(0,0,0,0.2)',
         position: 'fixed',
@@ -41,21 +40,18 @@ const ProjectSidebar = () => {
   );
 };
 
-// Mobile favorites card (only for sm screens)
-const MobileFavoritesCard = () => {
+// Favorites card component - shown below content for screens under 1024px
+const ResponsiveFavoritesCard = () => {
   const screens = useBreakpoint();
 
-  if (screens.md) return null;
+  // Only show this card when sidebar isn't visible (below 1024px)
+  if (screens.lg) return null;
 
   return (
-    <div className="w-[calc(100%-4px)] mx-0.5 mt-4">
-      <Card 
-        title="Favorite Projects" 
-        className="shadow-md bg-[#282828] text-white w-full overflow-hidden"
-        
-      >
+    <div className="w-full mx-auto mt-4">
+    
         <FavoritesList />
-      </Card>
+      
     </div>
   );
 };
@@ -88,16 +84,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <ConfigProvider>
       <FavoritesProvider>
         <Layout className="min-h-screen flex bg-[#212121]">
-          {/* Sidebar (hidden on small screens) */}
+          {/* Sidebar - only visible on lg screens (1024px+) */}
           <ProjectSidebar />
 
           {/* Main Content */}
-          <Layout className={`w-full ${screens.md ? 'ml-[300px]' : 'ml-0'}`}>
+          <Layout className={`w-full ${screens.lg ? 'ml-[300px]' : 'ml-0'}`}>
             <Content className="bg-[#212121] p-4 w-full flex flex-col items-center">
               <div className="w-full max-w-6xl">
                 {children}
               </div>
-              <MobileFavoritesCard />
+              <ResponsiveFavoritesCard />
             </Content>
           </Layout>
         </Layout>

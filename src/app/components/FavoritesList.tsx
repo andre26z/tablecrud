@@ -82,7 +82,7 @@ const FavoritesList = ({ className = '' }) => {
           color: '#EDEDED',
           border: '1px solid #303030',
           padding: '8px',
-          maxHeight: '80vh', // More responsive max height using viewport height
+          maxHeight: '85vh', // More responsive max height using viewport height
           overflowY: favoriteProjects.length > maxVisibleItems ? 'auto' : 'visible',
           overflowX: 'hidden', // Prevent horizontal scrolling
           scrollbarWidth: 'thin', // Firefox
