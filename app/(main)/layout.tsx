@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { Layout, Menu, ConfigProvider, theme, Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Layout, Menu, ConfigProvider, theme, Spin, Card, Grid } from 'antd';
 import type { MenuProps } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { FavoritesProvider, useFavorites } from '@/app/context/FavoritesContext'
 import '@ant-design/v5-patch-for-react-19';
 
 const { Content, Sider } = Layout;
+const { useBreakpoint } = Grid;
 
 // Custom dark theme for Ant Design
 const darkTheme = {
@@ -50,12 +51,12 @@ const darkTheme = {
   },
 };
 
-// Separate the sidebar into its own component to use the context
-const ProjectSidebar = () => {
+// Sidebar content as a component that can be used in sidebar or card
+const FavoritesList = ({ className = '' }) => {
   const { favoriteProjects, loading } = useFavorites();
 
   // Create menu items from favorite projects
-  const sidebarItems: MenuProps['items'] = [
+  const menuItems: MenuProps['items'] = [
     {
       key: 'favorites-header',
       label: <div className="font-medium text-gray-300">Favorite Projects</div>,
@@ -72,26 +73,62 @@ const ProjectSidebar = () => {
     })),
   ];
 
+  if (loading) {
+    return (
+      <div className={`flex justify-center p-4 ${className}`}>
+        <Spin size="small" />
+      </div>
+    );
+  }
+
+  return (
+    <Menu
+      mode="inline"
+      defaultSelectedKeys={[favoriteProjects[0]?.key || '']}
+      style={{ borderRight: 0, background: '#1E1E1E' }}
+      items={menuItems}
+      className={className}
+    />
+  );
+};
+
+// Sidebar component that only renders on md and above
+const ProjectSidebar = () => {
+  const screens = useBreakpoint();
+  
+  // Don't render the sidebar at all on small screens
+  if (!screens.md) {
+    return null;
+  }
+
   return (
     <Sider 
       width={200} 
       className="h-screen overflow-auto shadow-md fixed left-0 top-0 bottom-0 border-r border-opacity-50 border-gray-700"
       style={{ background: '#1E1E1E' }}
     >
-    
-      {loading ? (
-        <div className="flex justify-center p-4">
-          <Spin size="small" />
-        </div>
-      ) : (
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={[favoriteProjects[0]?.key || '']}
-          style={{ height: 'calc(100% - 56px)', borderRight: 0, background: '#1E1E1E' }}
-          items={sidebarItems}
-        />
-      )}
+      <FavoritesList className="h-[calc(100%-56px)]" />
     </Sider>
+  );
+};
+
+// Mobile favorites card that only renders below md breakpoint
+const MobileFavoritesCard = () => {
+  const screens = useBreakpoint();
+  
+  // Only render on small screens
+  if (screens.md) {
+    return null;
+  }
+
+  return (
+    <Card 
+      title="Favorite Projects" 
+      className="mt-4 shadow-md" 
+      style={{ background: '#282828' }}
+    >
+      <FavoritesList />
+    </Card>
   );
 };
 
@@ -100,6 +137,8 @@ export default function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const screens = useBreakpoint();
+  
   // Apply dark mode to HTML element for a consistent dark theme
   useEffect(() => {
     document.documentElement.classList.add('dark');
@@ -120,9 +159,12 @@ export default function AppLayout({
       <FavoritesProvider>
         <Layout className="min-h-screen bg-[#121212]" style={{ background: '#121212' }}>
           <Layout style={{ background: '#121212', margin: 0, padding: 0 }} hasSider>
+            {/* Desktop sidebar */}
             <ProjectSidebar />
+            
+            {/* Main content area with conditional margin */}
             <Layout 
-              className="ml-[200px]"
+              className={screens.md ? "ml-[200px]" : "ml-0"}
               style={{ 
                 minHeight: '100vh', 
                 background: '#121212',
@@ -130,8 +172,15 @@ export default function AppLayout({
                 padding: 0
               }}
             >
-              <Content className="bg-[#121212]" style={{ background: '#121212' }}>
-                {children}
+              <Content 
+                className="bg-[#121212] p-4" 
+                style={{ background: '#121212' }}
+              >
+                {/* Main content (your table would go here) */}
+                <div>{children}</div>
+                
+                {/* Mobile favorites card that appears below content on small screens */}
+                <MobileFavoritesCard />
               </Content>
             </Layout>
           </Layout>

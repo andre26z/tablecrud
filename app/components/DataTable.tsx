@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Space, Table, message } from 'antd';
+import { Space, Table, message, Card, Typography, List, Button, Grid } from 'antd';
 import type { TableProps } from 'antd';
 import Link from 'next/link';
-import { StarOutlined, StarFilled } from '@ant-design/icons';
+import { StarOutlined, StarFilled, EditOutlined } from '@ant-design/icons';
 import { useFavorites } from '@/app/context/FavoritesContext';
+
+const { Title, Text } = Typography;
+const { useBreakpoint } = Grid;
 
 interface ProjectType {
   key: string;
@@ -25,6 +28,9 @@ interface DataTableProps {
 const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
   // Create a message instance
   const [messageApi, contextHolder] = message.useMessage();
+  
+  // Use Ant Design's built-in responsive grid breakpoints
+  const screens = useBreakpoint();
   
   const { refreshFavorites } = useFavorites();
   const [favorites, setFavorites] = useState<Record<string, boolean>>(
@@ -93,6 +99,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       title: 'Project ID',
       dataIndex: 'projectId',
       key: 'projectId',
+      responsive: ['md'],
     },
     {
       title: 'Project Name',
@@ -103,16 +110,19 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       title: 'Start Date',
       dataIndex: 'startDate',
       key: 'startDate',
+      responsive: ['lg'],
     },
     {
       title: 'End Date',
       dataIndex: 'endDate',
       key: 'endDate',
+      responsive: ['lg'],
     },
     {
       title: 'Project Manager',
       dataIndex: 'projectManager',
       key: 'projectManager',
+      responsive: ['md'],
     },
     {
       title: '',
@@ -140,6 +150,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       render: (_, record) => (
         <Space size="middle">
           <Link href={`/edit/${record.key}`} className="text-blue-500 hover:text-blue-700">
+            <EditOutlined className="mr-1" />
             Edit
           </Link>
         </Space>
@@ -147,20 +158,98 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     },
   ];
 
+  // Use Ant Design's responsive breakpoints
+  // xs: < 576px (mobile phones)
+  // sm: ≥ 576px (mobile phones)
+  // md: ≥ 768px (tablets)
+  // lg: ≥ 992px (desktops)
+  // xl: ≥ 1200px (large desktops)
+  // xxl: ≥ 1600px (extra large desktops)
+
   return (
     <>
       {contextHolder}
       <div className="p-4 md:p-6">
-        <Table<ProjectType> 
-          columns={columns} 
-          dataSource={data} 
-          loading={loading}
-          rowKey="key"
-          pagination={{
-            pageSize: 10,
-            showSizeChanger: false,
-          }}
-        />
+        {/* For smaller screens (xs and sm), show card list */}
+        {(!screens.md) && (
+          <List
+            loading={loading}
+            dataSource={data}
+            renderItem={(project) => (
+              <List.Item
+                key={project.key}
+                className="mb-4"
+              >
+                <Card
+                  className="w-full"
+                  style={{ background: '#1E1E1E', border: '1px solid #404040' }}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <Title level={5} style={{ margin: 0, color: 'white' }}>
+                        {project.projectName}
+                      </Title>
+                      <Text type="secondary">ID: {project.projectId}</Text>
+                    </div>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(project.key);
+                      }}
+                      className="cursor-pointer"
+                    >
+                      {favorites[project.key] ? (
+                        <StarFilled style={{ color: '#fadb14', fontSize: '18px' }} />
+                      ) : (
+                        <StarOutlined style={{ color: '#d9d9d9', fontSize: '18px' }} />
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-1 mb-4">
+                    <div className="flex justify-between">
+                      <Text type="secondary">Start:</Text>
+                      <Text>{project.startDate}</Text>
+                    </div>
+                    <div className="flex justify-between">
+                      <Text type="secondary">End:</Text>
+                      <Text>{project.endDate}</Text>
+                    </div>
+                    <div className="flex justify-between">
+                      <Text type="secondary">Manager:</Text>
+                      <Text>{project.projectManager}</Text>
+                    </div>
+                  </div>
+                  
+                  <Link href={`/edit/${project.key}`}>
+                    <Button 
+                      type="primary" 
+                      icon={<EditOutlined />}
+                      className="w-full"
+                    >
+                      Edit Project
+                    </Button>
+                  </Link>
+                </Card>
+              </List.Item>
+            )}
+          />
+        )}
+
+        {/* For medium screens and up, show the table */}
+        {screens.md && (
+          <Table<ProjectType> 
+            columns={columns} 
+            dataSource={data} 
+            loading={loading}
+            rowKey="key"
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: false,
+            }}
+            scroll={{ x: 'max-content' }}
+          />
+        )}
       </div>
     </>
   );
