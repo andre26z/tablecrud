@@ -144,6 +144,10 @@ export default function ProjectDetailsPage() {
                 colorText: 'white',
                 colorTextDescription: 'rgba(255, 255, 255, 0.65)',
               },
+              Button: {
+                colorText: 'white',
+                colorBgContainer: '#1f1f1f', // Darker gray for buttons
+               }
             },
           }}
         >

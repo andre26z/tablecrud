@@ -85,7 +85,7 @@ export default function EditProjectPage() {
   }, [projectId, form, router, messageApi]);
 
   // Handle form submission
-  const onFinish = async (values: any) => {
+  const onFinish = async (values) => {
     try {
       setSubmitting(true);
       
@@ -123,6 +123,19 @@ export default function EditProjectPage() {
     router.push('/');
   };
 
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: '2rem 1rem',
+  };
+
+  const wrapperStyle = {
+    width: '100%',
+    maxWidth: '70%',
+    color: 'white',
+  };
+
   // Loading state
   if (loading) {
      return (
@@ -131,30 +144,16 @@ export default function EditProjectPage() {
             justifyContent: 'center', 
             alignItems: 'center', 
             height: '100vh',
-            width: '100%' 
+            width: '100%',
+            background: '#121212'
           }}>
             <div style={{ textAlign: 'center' }}>
               <Spin size="large" />
-              <div style={{ marginTop: '12px' }}>Loading project data...</div>
+              <div style={{ marginTop: '12px', color: '#FFFFFF' }}>Loading project data...</div>
             </div>
           </div>
         );
   }
-
-
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: '2rem 1rem',
-  };
-
-
-  const wrapperStyle = {
-    width: '100%',
-    maxWidth: '70%',
-    color: 'white',
-  };
 
   return (
     <div style={containerStyle}>
@@ -166,21 +165,28 @@ export default function EditProjectPage() {
               Card: {
                 colorTextHeading: 'white',
                 colorBorderSecondary: '#303030',
-                colorBgContainer: 'var(--card-background)',
+                colorBgContainer: '#1f1f1f', // Darker gray background for card
               },
               Form: {
                 colorText: 'white',
                 colorTextLabel: 'white',
               },
               DatePicker: {
-                colorTextPlaceholder: 'rgb(255, 255, 255)',
-                colorBgElevated: 'rgb(67, 66, 66)',
-                colorBgContainer: 'var(--card-background)',
+                colorTextPlaceholder: 'rgba(255, 255, 255, 0.5)',
+                colorBgElevated: '#2c2c2c', // Darker gray for dropdown
+                colorBgContainer: '#333333', // Gray for the input field
+                colorText: 'white',
+                colorPrimary: '#1890ff',
               },
               Input: {
                 colorTextPlaceholder: 'rgba(255, 255, 255, 0.5)',
-                colorBgContainer: 'var(--card-background)',
+                colorBgContainer: '#333333', // Gray for input fields
+                colorText: 'white',
               },
+              Button: {
+                colorText: 'white',
+                colorBgContainer: '#1f1f1f', // Darker gray for buttons
+              }
             },
           }}
         >

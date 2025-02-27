@@ -113,3 +113,79 @@
 .custom-dark-table .ant-pagination-next .ant-pagination-item-link {
   color: white !important;
 }
+
+/* Global form text color override */
+.ant-form-item-label > label,
+.ant-form-item-control-input,
+.ant-form-item,
+.ant-form-item input,
+.ant-form-item textarea,
+.ant-input,
+.ant-picker,
+.ant-picker-input > input,
+.ant-card,
+.ant-card-head-title,
+.ant-form-item-required::before,
+.ant-card-extra button {
+  color: white !important;
+}
+
+/* Fix input field text */
+.ant-input,
+.ant-picker-input > input,
+.ant-input-textarea textarea {
+  background-color: #333333 !important;
+  color: white !important;
+}
+
+/* Fix card backgrounds */
+.ant-card {
+  background-color: #1f1f1f !important;
+}
+
+/* Fix button text */
+.ant-btn {
+  color: white !important;
+}
+
+/* Fix dropdown backgrounds */
+.ant-picker-dropdown,
+.ant-select-dropdown {
+  background-color: #2c2c2c !important;
+}
+
+/* Fix disabled input */
+.ant-input[disabled] {
+  background-color: #444444 !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Add this CSS to your global styles */
+
+/* Fix for sidebar children container shrinking */
+.ant-layout-sider-children {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 1 auto !important;
+  height: 100% !important;
+}
+
+/* Make sure the sider itself maintains its width */
+.ant-layout-sider {
+  flex: 0 0 auto !important;
+  max-width: 400px !important; /* Adjust to your sidebar width */
+  min-width: 200px !important; /* Adjust to your sidebar width */
+}
+
+/* Ensure menu items expand to full width of sidebar */
+.ant-menu {
+  width: 100% !important;
+}
+
+/* If you're using fixed sidebar, ensure proper layout */
+.ant-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  min-height: 100vh !important;
+}

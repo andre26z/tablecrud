@@ -8,78 +8,13 @@ import Link from 'next/link';
 import { FavoritesProvider, useFavorites } from '@/src/app/context/FavoritesContext';
 import '@ant-design/v5-patch-for-react-19';
 import "@/src/app/globals.css";
+import FavoritesList from '@/src/app/components/FavoritesList';
 
 const { Content, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
 // Sidebar content
-const FavoritesList = ({ className = '' }) => {
-  const { favoriteProjects, loading } = useFavorites();
 
-  if (loading) {
-    return (
-      <div className={`flex justify-center p-4 ${className}`}>
-        <Spin size="small" />
-      </div>
-    );
-  }
-
-  return (
-    <Menu
-      mode="inline"
-      className={`border-none rounded-lg ${className}`}
-      style={{
-        backgroundColor: '#1E1E1E', // Dark background like DataTable
-        color: '#EDEDED', // White text by default
-        border: '1px solid #303030', // Subtle border
-        padding: '8px',
-      }}
-    >
-      <div
-        className="font-medium text-gray-300 p-3 border-b"
-        style={{ borderBottom: '1px solid #303030' }} // Matches table row dividers
-      >
-        Favorite Projects
-      </div>
-      
-      {favoriteProjects.map((project) => (
-        <Menu.Item
-          key={project.key}
-          style={{
-            padding: '10px',
-            borderBottom: '1px solid #303030', // Divider like table rows
-          }}
-        >
-          <Link
-            href={`/edit/${project.key}`}
-            className="flex items-center transition duration-200"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '8px',
-              borderRadius: '4px',
-              transition: 'background 0.2s ease-in-out',
-              color: '#EDEDED', // **Ensure text is always white**
-              textDecoration: 'none',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#000000'; // Hover background black
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent'; // Reset background
-            }}
-          >
-            <StarFilled
-              className="mr-2"
-              style={{ color: '#FFD700' }} // Yellow star
-            />
-            {project.projectName}
-          </Link>
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-};
 
 // Sidebar component (only for md+ screens)
 const ProjectSidebar = () => {
@@ -89,15 +24,17 @@ const ProjectSidebar = () => {
 
   return (
     <Sider
-      width={200}
+      width={400}
+      
       style={{
         backgroundColor: '#1E1E1E', // Match DataTable's background
-        padding: '16px 0',
+        padding: '48px 2px 2px 2px ',
+      
         borderRight: '1px solid #303030', // Subtle border like table lines
         boxShadow: '2px 0 4px rgba(0,0,0,0.2)', // Slight shadow for depth
       }}
     >
-      <FavoritesList className="p-2" />
+      <FavoritesList />
     </Sider>
   );
 };

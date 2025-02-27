@@ -59,6 +59,12 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
 
   const columns: TableProps<ProjectType>['columns'] = [
     {
+      title: 'Project ID',  // New Column
+      dataIndex: 'projectId',
+      key: 'projectId',
+      render: (text) => <span className="text-white">{text}</span>, // Ensure white text
+    },
+    {
       title: 'Project Name',
       dataIndex: 'projectName',
       key: 'projectName',

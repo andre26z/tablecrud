@@ -3,22 +3,22 @@
     {
       "key": "1",
       "projectId": "PRJ-001",
-      "projectName": "22222",
+      "projectName": "22323213123",
       "description": "Complete overhaul of company website with new design system and improved wsss",
       "startDate": "2025-01-15",
       "endDate": "2025-04-30",
       "projectManager": "John Smith",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "2",
       "projectId": "PRJ-002",
-      "projectName": "teste 2222",
+      "projectName": "teste 2222223123123",
       "description": "Building cross-platform mobile application for iOS and Android",
       "startDate": "2025-02-01",
       "endDate": "2025-06-15",
       "projectManager": "Sarah Johnson",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "3",
@@ -38,7 +38,7 @@
       "startDate": "2025-02-15",
       "endDate": "2025-07-30",
       "projectManager": "Emily Rodriguez",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "5",
@@ -48,7 +48,7 @@
       "startDate": "2025-04-01",
       "endDate": "2025-09-15",
       "projectManager": "David Wilson",
-      "favorite": false
+      "favorite": true
     },
     {
       "projectId": "666",
@@ -77,7 +77,8 @@
       "startDate": "2025-02-05",
       "endDate": "2025-02-21",
       "projectManager": "Karl",
-      "key": "8"
+      "key": "8",
+      "favorite": true
     },
     {
       "projectId": "PROKECT2",
@@ -86,7 +87,8 @@
       "startDate": "2025-02-05",
       "endDate": "2025-02-24",
       "projectManager": "wwwww",
-      "key": "9"
+      "key": "9",
+      "favorite": true
     },
     {
       "key": "10",
@@ -96,7 +98,7 @@
       "startDate": "2025-05-01",
       "endDate": "2025-10-01",
       "projectManager": "Jessica Lee",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "11",
@@ -106,7 +108,7 @@
       "startDate": "2025-03-20",
       "endDate": "2025-08-30",
       "projectManager": "Brian Adams",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "12",
@@ -116,7 +118,7 @@
       "startDate": "2025-06-01",
       "endDate": "2025-11-15",
       "projectManager": "Samantha Green",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "13",
@@ -126,7 +128,7 @@
       "startDate": "2025-04-10",
       "endDate": "2025-09-30",
       "projectManager": "Nathan Carter",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "14",
@@ -136,7 +138,7 @@
       "startDate": "2025-07-01",
       "endDate": "2025-12-15",
       "projectManager": "Olivia Martinez",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "15",
@@ -146,7 +148,7 @@
       "startDate": "2025-05-15",
       "endDate": "2025-10-10",
       "projectManager": "Carlos Mendoza",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "16",
@@ -166,7 +168,7 @@
       "startDate": "2025-04-05",
       "endDate": "2025-09-15",
       "projectManager": "Ethan Parker",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "18",
@@ -176,7 +178,7 @@
       "startDate": "2025-08-01",
       "endDate": "2026-01-15",
       "projectManager": "Laura Collins",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "19",
@@ -186,7 +188,7 @@
       "startDate": "2025-05-25",
       "endDate": "2025-11-05",
       "projectManager": "Kevin Foster",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "20",
@@ -196,7 +198,7 @@
       "startDate": "2025-07-10",
       "endDate": "2025-12-20",
       "projectManager": "Megan Lewis",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "21",

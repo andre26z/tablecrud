@@ -22,8 +22,8 @@ export default function CreateProjectPage() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(null);
   
   // Create message instance for antd v5 compatibility
   const [messageApi, contextHolder] = message.useMessage();
@@ -57,7 +57,7 @@ export default function CreateProjectPage() {
   }, [submitSuccess, messageApi]);
 
   // Handle form submission
-  const onFinish = async (values: any) => {
+  const onFinish = async (values) => {
     try {
       setSubmitting(true);
       
@@ -119,21 +119,28 @@ export default function CreateProjectPage() {
               Card: {
                 colorTextHeading: 'white',
                 colorBorderSecondary: '#303030',
-                colorBgContainer: 'var(--card-background)',
+                colorBgContainer: '#1f1f1f', // Darker gray background for card
               },
               Form: {
                 colorText: 'white',
                 colorTextLabel: 'white',
               },
               DatePicker: {
-                colorTextPlaceholder: 'rgba(255, 255, 255, 0.99)',
-                colorBgElevated: 'rgb(67, 66, 66)',
-                colorBgContainer: 'var(--card-background)',
+                colorTextPlaceholder: 'rgba(255, 255, 255, 0.5)',
+                colorBgElevated: '#2c2c2c', // Darker gray for dropdown
+                colorBgContainer: '#333333', // Gray for the input field
+                colorText: 'white',
+                colorPrimary: '#1890ff',
               },
               Input: {
-                colorTextPlaceholder: 'rgb(255, 255, 255)',
-                colorBgContainer: 'var(--card-background)',
+                colorTextPlaceholder: 'rgba(255, 255, 255, 0.5)',
+                colorBgContainer: '#333333', // Gray for input fields
+                colorText: 'white',
               },
+              Button: {
+                colorText: 'white',
+                colorBgContainer: '#1f1f1f', // Darker gray for buttons
+              }
             },
           }}
         >
@@ -219,6 +226,7 @@ export default function CreateProjectPage() {
                     type="primary" 
                     htmlType="submit" 
                     icon={<SaveOutlined />}
+                    loading={submitting}
                   >
                     Create Project
                   </Button>
@@ -235,7 +243,7 @@ export default function CreateProjectPage() {
   );
 
   // Full-page loading spinner
-  const loadingSpinner = (message: string) => (
+  const loadingSpinner = (message) => (
     <div style={{ 
       display: 'flex', 
       justifyContent: 'center', 
