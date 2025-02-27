@@ -18,7 +18,7 @@
       "startDate": "2025-02-01",
       "endDate": "2025-06-15",
       "projectManager": "Sarah Johnson",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "3",
@@ -28,7 +28,7 @@
       "startDate": "2025-03-10",
       "endDate": "2025-05-20",
       "projectManager": "Michael Chen",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "4",
@@ -48,7 +48,7 @@
       "startDate": "2025-04-01",
       "endDate": "2025-09-15",
       "projectManager": "David Wilson",
-      "favorite": false
+      "favorite": true
     },
     {
       "projectId": "666",
@@ -58,7 +58,7 @@
       "endDate": "2025-02-04",
       "projectManager": "James Charles",
       "key": "6",
-      "favorite": false
+      "favorite": true
     },
     {
       "projectId": "123",
@@ -78,7 +78,7 @@
       "endDate": "2025-02-21",
       "projectManager": "Karl",
       "key": "8",
-      "favorite": false
+      "favorite": true
     },
     {
       "projectId": "PROKECT2",
@@ -88,7 +88,7 @@
       "endDate": "2025-02-24",
       "projectManager": "wwwww",
       "key": "9",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "10",
@@ -218,7 +218,7 @@
       "startDate": "2025-09-01",
       "endDate": "2026-02-10",
       "projectManager": "Rebecca Hall",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "23",
@@ -228,7 +228,7 @@
       "startDate": "2025-04-15",
       "endDate": "2025-10-25",
       "projectManager": "Mark Evans",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "24",
@@ -238,7 +238,7 @@
       "startDate": "2025-07-15",
       "endDate": "2026-01-30",
       "projectManager": "Rachel Scott",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "25",
@@ -248,7 +248,7 @@
       "startDate": "2025-06-25",
       "endDate": "2025-12-05",
       "projectManager": "Zachary White",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "26",
@@ -258,7 +258,7 @@
       "startDate": "2025-08-10",
       "endDate": "2026-02-20",
       "projectManager": "Julia Adams",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "27",
@@ -278,7 +278,7 @@
       "startDate": "2025-09-05",
       "endDate": "2026-03-01",
       "projectManager": "Vanessa Cooper",
-      "favorite": false
+      "favorite": true
     },
     {
       "key": "29",
@@ -288,7 +288,7 @@
       "startDate": "2025-07-20",
       "endDate": "2026-01-05",
       "projectManager": "Daniel Harris",
-      "favorite": false
+      "favorite": true
     }
   ]
 }

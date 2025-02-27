@@ -1,8 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Management Dashboard
+
+A modern project management dashboard built with Next.js, TypeScript, and Ant Design. This application features a dark theme, project favorites system, and a responsive UI.
+
+![Project Dashboard Screenshot](https://via.placeholder.com/1200x600/1f1f1f/FFFFFF?text=Project+Management+Dashboard)
+
+## Features
+
+- 🌙 Dark theme UI with custom styling
+- ⭐ Project favorites system
+- 📱 Responsive design
+- 📊 Project data table with sorting and filtering
+- 🔒 API endpoints for data persistence
+
+## Technology Stack
+
+- **Frontend**:
+  - Next.js 14 (App Router)
+  - TypeScript
+  - Ant Design
+  - Tailwind CSS
+
+- **API**:
+  - Next.js API Routes
+  - Mock API Server (JSON Server)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.x or higher
+- npm, yarn, or pnpm
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/project-management-dashboard.git
+cd project-management-dashboard
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### Running the Development Server
+
+Start the Next.js development server:
 
 ```bash
 npm run dev
@@ -10,27 +60,122 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Setting Up the Mock API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses JSON Server to simulate a REST API for development.
 
-## Learn More
+1. Install JSON Server globally if you haven't already:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install -g json-server
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Create a `db.json` file in the project root with your mock data:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```json
+{
+  "projects": [
+    {
+      "key": "1",
+      "projectId": "PRJ001",
+      "projectName": "Website Redesign",
+      "startDate": "2023-01-15",
+      "endDate": "2023-06-30",
+      "projectManager": "Jane Smith",
+      "favorite": true
+    },
+    {
+      "key": "2",
+      "projectId": "PRJ002",
+      "projectName": "Mobile App Development",
+      "startDate": "2023-02-01",
+      "endDate": "2023-08-15",
+      "projectManager": "John Doe",
+      "favorite": false
+    }
+  ]
+}
+```
 
-## Deploy on Vercel
+3. Start the JSON Server on port 3001:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+json-server --watch db.json --port 3001
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Create a `.env.local` file in your project root to point to the mock API:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+### API Routes
+
+The app uses the following API endpoints:
+
+- `GET /api/projects` - Get all projects
+- `GET /api/projects/:id` - Get a specific project
+- `PUT /api/projects/:id/favorite` - Toggle favorite status
+- `PUT /api/projects/:id` - Update a project
+
+## Project Structure
+
+```
+├── app/
+│   ├── api/               # Next.js API routes
+│   ├── components/        # React components
+│   ├── context/           # React context providers
+│   ├── details/[id]/      # Project details page
+│   ├── edit/[id]/         # Project edit page
+│   └── page.tsx           # Home page
+├── public/                # Static files
+├── styles/                # Global CSS and Tailwind setup
+├── db.json                # Mock database for JSON Server
+└── package.json           # Project dependencies
+```
+
+## Customizing the Theme
+
+The dark theme is implemented using CSS variables and Tailwind CSS utilities. You can customize the theme by modifying:
+
+1. The CSS variables in `styles/globals.css`
+2. The component-specific styling throughout the application
+3. The Tailwind configuration in `tailwind.config.js`
+
+## Development Notes
+
+### Favorites System
+
+The favorites system uses React Context to manage state across the application. The main components:
+
+- `FavoritesContext.tsx` - Context provider for favorite projects
+- `DataTable.tsx` - Component for displaying and toggling favorites
+- API endpoints for persisting favorites
+
+### Modal Styling
+
+The modal styling uses custom CSS to ensure the dark theme is applied consistently. This includes:
+
+- Custom class names to target specific elements
+- Direct style props for immediate buttons
+- Global CSS overrides for complex components
+
+## Deployment
+
+Deploy to Vercel with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fproject-management-dashboard)
+
+For other deployment options, see the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
