@@ -6,6 +6,7 @@ import type { MenuProps } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import Link from 'next/link';
 import { FavoritesProvider, useFavorites } from '@/app/context/FavoritesContext';
+import '@ant-design/v5-patch-for-react-19';
 
 const { Content, Sider } = Layout;
 
@@ -63,7 +64,7 @@ const ProjectSidebar = () => {
     ...favoriteProjects.map(project => ({
       key: project.key,
       label: (
-        <Link href={`/edit?id=${project.key}`} className="flex items-center">
+        <Link href={`/edit/${project.key}`} className="flex items-center">
           <StarFilled style={{ color: '#FADB14', marginRight: 8 }} />
           {project.projectName}
         </Link>
@@ -77,7 +78,7 @@ const ProjectSidebar = () => {
       className="h-screen overflow-auto shadow-md fixed left-0 top-0 bottom-0 border-r border-opacity-50 border-gray-700"
       style={{ background: '#1E1E1E' }}
     >
-      <div className="p-4 font-bold text-lg text-white border-b border-gray-700 border-opacity-50">Projects</div>
+    
       {loading ? (
         <div className="flex justify-center p-4">
           <Spin size="small" />
