@@ -27,7 +27,7 @@ export default function HomePage() {
   };
 
   return (
-    <Content style={{ padding: 24 }}>
+    <Content style={{ padding: 5 }}>
       <div
         style={{
           display: 'flex',

@@ -59,10 +59,10 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
 
   const columns: TableProps<ProjectType>['columns'] = [
     {
-      title: 'Project ID',  // New Column
+      title: 'Project ID',
       dataIndex: 'projectId',
       key: 'projectId',
-      render: (text) => <span className="text-white">{text}</span>, // Ensure white text
+      render: (text) => <span className="text-white">{text}</span>,
     },
     {
       title: 'Project Name',
@@ -95,6 +95,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     {
       title: '',
       key: 'favorite',
+      width: 50,
       render: (_, record) => (
         <div
           onClick={(e) => {
@@ -104,7 +105,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
           className="cursor-pointer"
         >
           {favorites[record.key] ? (
-            <StarFilled style={{ color: '#FFD700' }} /> // **Always Yellow Star**
+            <StarFilled style={{ color: '#FFD700' }} />
           ) : (
             <StarOutlined className="text-gray-400" />
           )}
@@ -114,6 +115,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
     {
       title: '',
       key: 'action',
+      width: 80,
       render: (_, record) => (
         <Space>
           <a
@@ -137,15 +139,18 @@ const DataTable: React.FC<DataTableProps> = ({ data, loading }) => {
       <div className="mt-3 text-[var(--foreground)]">Loading projects...</div>
     </div>
   ) : (
-    <div className="w-full">
+    <div className="mx-0.5 w-[calc(100%-4px)]">
       {contextHolder}
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowKey="key"
-        pagination={{ pageSize: 10 }}
-        className="custom-dark-table"
-      />
+      <div className="w-full overflow-x-auto">
+        <Table
+          columns={columns}
+          dataSource={data}
+          rowKey="key"
+          pagination={{ pageSize: 10 }}
+          className="custom-dark-table"
+          scroll={{ x: 'max-content' }}
+        />
+      </div>
     </div>
   );
 };
