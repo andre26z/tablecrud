@@ -3,8 +3,8 @@
 import React from 'react';
 import { Button, Card, Typography, Layout, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import DataTable from '@/app/components/DataTable';
-import { useDataService } from '@/app/services/dataServices';
+import DataTable from '@/src/app/components/DataTable';
+import { useDataService } from '@/src/app/services/dataServices';
 import { useRouter } from 'next/navigation';
 
 const { Title } = Typography;

@@ -1,5 +1,5 @@
 import '@ant-design/v5-patch-for-react-19';
-
+import "@/src/styles/globals.css";
 export default function RootLayout({
   children,
 }: {

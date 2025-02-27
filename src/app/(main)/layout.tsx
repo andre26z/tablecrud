@@ -5,8 +5,9 @@ import { Layout, Menu, ConfigProvider, theme, Spin, Card, Grid } from 'antd';
 import type { MenuProps } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import Link from 'next/link';
-import { FavoritesProvider, useFavorites } from '@/app/context/FavoritesContext';
+import { FavoritesProvider, useFavorites } from '@/src/app/context/FavoritesContext';
 import '@ant-design/v5-patch-for-react-19';
+import "@/src/styles/globals.css";
 
 const { Content, Sider } = Layout;
 const { useBreakpoint } = Grid;
