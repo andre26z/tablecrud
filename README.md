@@ -72,4 +72,4 @@ npm run mock-api
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-Running Mock Api will create a API to make requests to gather information and updates on the items.
+Running Mock Api will create a mock server containing the items we fetch on the application.
